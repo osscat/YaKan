@@ -1,2 +1,55 @@
 YaKan
 ===============
+# Python のインストール
+★バージョン : 3.6.5
+インストーラをダウンロードしてインストール
+https://www.python.org/downloads/
+バージョン確認
+```
+python --version
+```
+# Django のインストール
+★バージョン : 2.0.6
+pip でインストール
+プロキシを通す場合は proxy オプションを付ける
+```
+pip install Django==2.0.6 --proxy=http://userid:password@proxyhost:port
+```
+# Django REST frameworkのインストール
+```
+pip install djangorestframework
+```
+# PostgreSQL 接続ドライバのインストール
+```
+pip install psycopg2
+```
+# 開発環境
+Pycharm
+https://www.jetbrains.com/pycharm/
+とか
+Eclipse (PyDev)
+とか
+
+
+# その他
+・プロジェクト作成
+```
+django-admin startproject XXXX
+```
+・アプリケーション作成
+```
+python manage.py startapp XXXX
+```
+・サーバー起動
+```
+python manage.py runserver
+```
+・スーパーユーザ作成
+```
+python manage.py createsuperuser
+```
+・マイグレーション
+```
+python manage.py makemigrations
+python manage.py migrate
+```
