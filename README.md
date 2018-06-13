@@ -26,6 +26,13 @@ pip install djangorestframework
 ```
 pip install psycopg2
 ```
+# CORS に対応する
+ライブラリをインストールする
+```
+pip install django-cors-headers
+```
+
+
 # 開発環境
 Pycharm
 https://www.jetbrains.com/pycharm/
