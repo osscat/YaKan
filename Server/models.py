@@ -11,3 +11,36 @@ class Project(models.Model):
         return self.title
 
 
+class ProjectMember(models.Model):
+    project_id = models.IntegerField(blank=False)
+    user_id = models.IntegerField(blank=False)
+
+
+class User(models.Model):
+    userid = models.TextField(blank=False, unique=True)
+    username = models.TextField(blank=False)
+    password = models.TextField(blank=False)
+    delete_flag = models.IntegerField(default=0, blank=False)
+
+
+class Lane(models.Model):
+    project_id = models.IntegerField(blank=False)
+    title = models.TextField(blank=False)
+    status = models.IntegerField(default=0, blank=False)
+    order = models.IntegerField(blank=False)
+
+
+class Task(models.Model):
+    title = models.TextField(blank=False)
+    order = models.IntegerField(blank=False)
+    user_id = models.IntegerField(blank=False)
+    man_day = models.FloatField(blank=False)
+    status = models.IntegerField(default=0, blank=False)
+    lane_id = models.IntegerField(blank=False)
+    label_id = models.IntegerField(blank=True)
+    delete_flag = models.IntegerField(default=0, blank=False)
+
+
+class Label(models.Model):
+    name = models.TextField(blank=False)
+    color = models.CharField(blank=False, max_length=6)
