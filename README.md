@@ -74,6 +74,10 @@ npm install -g vue-cli
 ```
 vue init webpack XXX
 ```
+・プロジェクトをチェックアウトした場合は下記を実施
+```
+npm install
+```
 ・開発ビルドと起動
 ```
 npm run dev
