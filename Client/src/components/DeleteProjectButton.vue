@@ -17,7 +17,7 @@ export default {
   props: ['project'],
   methods: {
     deleteProject: function () {
-      var url = PROJECT_DELETE_URL + this.project.id + "/"
+      var url = PROJECT_DELETE_URL + this.project.id + '/'
       axios
         .delete(url)
         .then(response => { console.log(response); this.project = null })
