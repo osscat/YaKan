@@ -1,5 +1,8 @@
 YaKan
 ===============
+
+# バックエンド
+
 # Python のインストール
 ★バージョン : 3.6.5
 インストーラをダウンロードしてインストール
@@ -52,4 +55,30 @@ python manage.py createsuperuser
 ```
 python manage.py makemigrations
 python manage.py migrate
+```
+
+# フロントエンド
+
+# Node.js のインストール
+適宜インストーラで。
+
+# vue-cli のインストール
+```
+npm install -g vue-cli
+```
+
+# 開発環境
+
+# その他
+・プロジェクト作成
+```
+vue init webpack XXX
+```
+・開発ビルドと起動
+```
+npm run dev
+```
+・製品版ビルド
+```
+???
 ```
