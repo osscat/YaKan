@@ -1,18 +1,28 @@
+/**
+ *  プロジェクトの一覧を表示するコンポーネント。
+ */
 <template>
   <div class="flex-container">
-    <p v-for="project in projects" :key="project.id">
-      {{ project.title }}
-    </p>
+    <div v-for="project in projects" :key="project.id">
+      <ProjectSub :project="project" />
+    </div>
+    <AddProjectForm />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import ProjectSub from './ProjectSub'
+import AddProjectForm from './AddProjectForm'
 
 const LIST_URL = 'http://127.0.0.1:8000/api/projects/?format=json'
 
 export default {
   name: 'Project',
+  components: {
+    ProjectSub,
+    AddProjectForm
+  },
   data () {
     return {
       projects: null
