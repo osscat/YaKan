@@ -17,7 +17,7 @@ class ProjectMember(models.Model):
 
 
 class User(models.Model):
-    userid = models.TextField(blank=False, unique=True)
+    loginid = models.TextField(blank=False, unique=True)
     username = models.TextField(blank=False)
     password = models.TextField(blank=False)
     delete_flag = models.IntegerField(default=0, blank=False)
