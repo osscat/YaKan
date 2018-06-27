@@ -20,8 +20,7 @@ export default {
       var url = PROJECT_DELETE_URL + this.project.id + '/'
       axios
         .delete(url)
-        .then(response => { console.log(response); this.project = null })
-      this.removeElement(this.project.id)
+        .then(response => { console.log(response); this.removeElement(this.project.id) })
     },
     removeElement: function (id) {
       var data = this.$parent.$parent.projects.filter(

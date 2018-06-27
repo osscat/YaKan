@@ -3,7 +3,7 @@
  */
 <template>
   <form>
-    タイトル<input type="text" id="title" />
+    プロジェクト名<input type="text" id="title" />
     <button type="button" @click="addProject">
       登録
     </button>
@@ -24,7 +24,7 @@ export default {
           title: document.getElementById('title').value,
           owner_id: 3
         })
-        .then(response => { this.$parent.projects.push(response.data) })
+        .then(response => { this.$parent.projects.push(response.data); document.getElementById('title').value = '' })
     }
   }
 }
