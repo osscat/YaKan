@@ -1,8 +1,8 @@
-from django.shortcuts import render
 from rest_framework import viewsets, filters
 
 from .models import Project, ProjectMember, User, Lane, Task, Label
-from .serializer import ProjectSerializer, ProjectMemberSerializer, UserSerializer, LaneSerializer, TaskSerializer, LabelSerializer
+from .serializer import ProjectSerializer, ProjectMemberSerializer, UserSerializer, LaneSerializer, TaskSerializer, \
+    LabelSerializer
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
@@ -28,6 +28,7 @@ class LaneViewSet(viewsets.ModelViewSet):
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
+    filter_fields = ('lane_id',)
 
 
 class LabelViewSet(viewsets.ModelViewSet):
