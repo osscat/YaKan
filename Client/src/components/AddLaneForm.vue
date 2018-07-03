@@ -1,0 +1,41 @@
+/**
+ *  レーンを追加するフォームのコンポーネント。
+ */
+<template>
+  <form>
+    タイトル<input type="text" id="title" />
+    <button type="button" @click="addLane">
+      登録
+    </button>
+  </form>
+</template>
+
+<script>
+import axios from 'axios'
+
+const LANE_POST_URL = 'http://127.0.0.1:8000/api/lanes/'
+
+export default {
+  name: 'AddLaneForm',
+  props: ['projectid'],
+  mounted () {
+    console.log(this.projectid)
+  },
+  methods: {
+    addLane: function () {
+      axios
+        .post(LANE_POST_URL, {
+          project_id: this.projectid,
+          title: document.getElementById('title').value,
+          status: 0,
+          order: 1
+        })
+        .then(response => { this.$parent.lanes.push(response.data) })
+    }
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+</style>
