@@ -31,6 +31,10 @@ pip install psycopg2
 ```
 pip install django-cors-headers
 ```
+# django-filter のインストール
+```
+pip install django-filter
+```
 
 
 # 開発環境
