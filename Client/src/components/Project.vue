@@ -2,54 +2,55 @@
  *  プロジェクトの一覧を表示するコンポーネント。
  */
 <template>
-  <div class="flex-container">
-    <div v-for="project in projects" :key="project.id">
-      <ProjectSub :project="project" />
-    </div>
+  <div>
     <AddProjectForm />
+    <transition-group name="demo" tag="div" class="flex-project">
+      <div v-for="project in projects" :key="project.id">
+        <ProjectSub :project="project" />
+      </div>
+    </transition-group>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 import ProjectSub from './ProjectSub'
 import AddProjectForm from './AddProjectForm'
 
-const LIST_URL = 'http://127.0.0.1:8000/api/projects/?format=json'
-
 export default {
   name: 'Project',
+  props: ['projects'],
   components: {
     ProjectSub,
     AddProjectForm
-  },
-  data () {
-    return {
-      projects: null
-    }
-  },
-  mounted () {
-    this.loadList()
-  },
-  methods: {
-    loadList: function () {
-      axios
-        .get(LIST_URL)
-        .then(response => (this.projects = response.data))
-    }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.flex-container {
-  display: flex;
-  position: fixed;
+.flex-project {
   width: 100%;
-  height: 100%;
-  padding: 10px;
-  overflow: scroll;
-  background-color: #F5F5DC;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.flex-project2 {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.demo-enter-active, .demo-leave-active {
+  transition: transform .5s, opacity .5s;
+}
+.demo-move:not(.demo-leave-active) {
+  transition: transform .5s;
+}
+/* 消える時は縮小される */
+.demo-leave-to {
+  opacity: 0;
+  transform: scale(0.8);
+}
+.demo-leave-active {
+  position: absolute;
 }
 </style>
