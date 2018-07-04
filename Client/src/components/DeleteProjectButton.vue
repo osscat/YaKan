@@ -23,14 +23,14 @@ export default {
         .then(response => { console.log(response); this.removeElement(this.project.id) })
     },
     removeElement: function (id) {
-      var data = this.$parent.$parent.projects.filter(
+      var data = this.$parent.$parent.$parent.projects.filter(
         function (item, index) {
           if (item.id !== id) {
             return true
           }
         }
       )
-      this.$parent.$parent.projects = data
+      this.$parent.$parent.$parent.projects = data
     }
   }
 }
