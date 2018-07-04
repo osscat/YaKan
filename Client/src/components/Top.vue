@@ -13,7 +13,7 @@ import axios from 'axios'
 import Header from './Header'
 import Project from './Project'
 
-const LIST_URL = 'http://127.0.0.1:8000/api/projects/?format=json'
+const LIST_URL = 'http://127.0.0.1:8000/api/projects/'
 
 export default {
   name: 'Login',
