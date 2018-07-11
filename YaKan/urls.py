@@ -23,6 +23,7 @@ from Server.urls import router as server_router
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^api/', include(server_router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls')),
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^refresh-token/', refresh_jwt_token),
