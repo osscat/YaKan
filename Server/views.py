@@ -1,13 +1,24 @@
-from rest_framework import viewsets, filters
-
+from django_filters import rest_framework as filters
+from rest_framework import viewsets
 from .models import Project, ProjectMember, User, Lane, Task, Label
 from .serializer import ProjectSerializer, ProjectMemberSerializer, UserSerializer, LaneSerializer, TaskSerializer, \
     LabelSerializer
 
 
+class ProjectFilter(filters.FilterSet):
+    # フィルタの定義
+    title = filters.CharFilter(name="title", lookup_expr='contains')
+
+    class Meta:
+        model = Project
+        fields = ['title']
+
+
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    # フィルタセットの指定
+    filter_class = ProjectFilter
 
 
 class ProjectMemberViewSet(viewsets.ModelViewSet):
