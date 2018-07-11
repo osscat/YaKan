@@ -26,7 +26,7 @@ export default {
         })
         .then(response => {
           this.$parent.projects.push(response.data)
-          this.$parent.$parent.loadList()
+          this.$parent.$parent.send('add')
           document.getElementById('title').value = ''
         })
     }
