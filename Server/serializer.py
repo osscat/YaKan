@@ -1,6 +1,7 @@
 from rest_framework import serializers
+from django.contrib.auth.models import User
 
-from .models import Project, ProjectMember, User, Lane, Task, Label
+from .models import Project, ProjectMember, Lane, Task, Label
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -18,7 +19,7 @@ class ProjectMemberSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'loginid', 'username', 'password', 'delete_flag')
+        fields = ('id', 'username', 'first_name', 'last_name', 'is_active')
 
 
 class LaneSerializer(serializers.ModelSerializer):

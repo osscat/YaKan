@@ -16,13 +16,6 @@ class ProjectMember(models.Model):
     user_id = models.IntegerField(blank=False)
 
 
-class User(models.Model):
-    loginid = models.TextField(blank=False, unique=True)
-    username = models.TextField(blank=False)
-    password = models.TextField(blank=False)
-    delete_flag = models.IntegerField(default=0, blank=False)
-
-
 class Lane(models.Model):
     project_id = models.IntegerField(blank=False)
     title = models.TextField(blank=False)
