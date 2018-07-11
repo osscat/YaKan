@@ -35,6 +35,12 @@ pip install django-cors-headers
 ```
 pip install django-filter
 ```
+# 認証用ライブラリ のインストール
+```
+pip install django-rest-auth
+pip install djangorestframework-jwt
+pip install django-allauth
+```
 
 
 # 開発環境
