@@ -2,9 +2,9 @@
  *  レーンを削除するボタンのコンポーネント。
  */
 <template>
-  <button type="button" @click="deleteLane">
-    削除
-  </button>
+  <div style="float: right;">
+    <el-button type="danger" icon="el-icon-delete" circle @click="openConfirm"></el-button>
+  </div>
 </template>
 
 <script>
@@ -17,6 +17,24 @@ export default {
   name: 'DeleteLaneButton',
   props: ['laneid'],
   methods: {
+    openConfirm: function () {
+      this.$confirm('レーンを削除しますか?', '削除確認', {
+        confirmButtonText: '削除',
+        cancelButtonText: 'キャンセル',
+        type: 'Confirm'
+      }).then(() => {
+        this.deleteLane()
+        this.$message({
+          type: 'success',
+          message: '削除しました。'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: 'キャンセルしました。'
+        })
+      })
+    },
     deleteLane: function () {
       var url = LANE_DELETE_URL + this.laneid + '/'
       axios
@@ -30,6 +48,7 @@ export default {
       this.removeElement(this.laneid)
     },
     deletetasks: function () {
+      // TODO:物理削除じゃなくて論理削除？
       var url = TASK_DELETE_URL + '?lane_id=' + this.laneid
       axios
         .delete(url)
