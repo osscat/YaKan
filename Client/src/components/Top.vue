@@ -3,7 +3,7 @@
  */
 <template>
   <div class="flex-container">
-    <Header @childs-event="loadList" />
+    <Header />
     <Project :projects="projects" />
   </div>
 </template>
@@ -14,6 +14,8 @@ import Header from './Header'
 import Project from './Project'
 
 const LIST_URL = 'http://127.0.0.1:8000/api/projects/'
+
+var chatSocket
 
 export default {
   name: 'Login',
@@ -27,9 +29,35 @@ export default {
     Project
   },
   mounted () {
+    this.initWebSocket()
     this.loadList()
   },
   methods: {
+    initWebSocket: function () {
+      var serverHost = 'localhost:8000'
+      chatSocket = new WebSocket(
+        'ws://' + serverHost +
+        '/ws/chat/echo/')
+
+      chatSocket.onmessage = this.onMessage
+
+      chatSocket.onclose = function (e) {
+        console.error('Chat socket closed unexpectedly')
+      }
+    },
+    // **
+    //  * 処理の種類を WebSocket でサーバーに送ります。
+    //  * transaction : add, delete
+    //  *
+    send: function (transaction) {
+      console.log(transaction)
+      chatSocket.send(JSON.stringify({
+        'transaction': transaction
+      }))
+    },
+    onMessage: function (e) {
+      this.loadList()
+    },
     loadList: function (word) {
       axios
         .get(LIST_URL)
