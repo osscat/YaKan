@@ -103,3 +103,56 @@ npm run dev
 ```
 ???
 ```
+
+
+# WebSocket の設定
+・参考サイト
+　https://poyo.hatenablog.jp/entry/2018/05/17/224247
+
+・必要なもの
+　channels
+　VisualC++ Build Tool (channels のインストールに必要）
+　pywin32
+　redis (インメモリDB)
+
+・インストール
+　■ VisualC++ Build Tool
+　　https://download.microsoft.com/download/5/F/7/5F7ACAEB-8363-451F-9425-68A90F98B238/visualcppbuildtools_full.exe
+
+　■ channels
+　　pip install -U channels
+
+　■ settings.py の設定
+　　Yakan/settings.py に以下の記述を追加
+
+　　ASGI_APPLICATION = "YaKan.routing.application"
+
+　　CHANNEL_LAYERS = {
+　　    'default': {
+　　        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+　　        'CONFIG': {
+　　            "hosts": [('127.0.0.1', 6379)],
+　　        },
+　　    },
+　　}
+
+　ここまで設定した後、runserver して　「ModuleNotFoundError: No module named 'win32api'」のエラーが
+　出た場合、pywin32 をインストールしてください。
+
+　■ pywin32　
+　　https://github.com/mhammond/pywin32/releases
+　　　python3.6.5 なら pywin32-223.win-amd64-py3.6.exe
+
+　■ redis
+　　channels で複数ブラウザに対して値を返却する仕組みのバックエンドとして redis という
+　　インメモリーデータベースを使います。
+
+　　本体（更新とまってますが仕方ない）
+　　https://github.com/MicrosoftArchive/redis/releases
+
+　　連携用のモジュール
+　　pip install channels_redis
+　　pip install asgi_redis
+　　pip install asgiref==2.2.0
+
+　　

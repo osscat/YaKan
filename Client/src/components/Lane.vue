@@ -10,6 +10,7 @@
     <p v-for="task in tasks" :key="task.id">
       <Task :task="task" />
     </p>
+    <AddTaskButton :laneid="lane.id" style="float: left" ></AddTaskButton>
     <DeleteLaneButton :laneid="lane.id"></DeleteLaneButton>
   </div>
 </template>
@@ -18,6 +19,7 @@
 import axios from 'axios'
 import Task from './task'
 import DeleteLaneButton from './DeleteLaneButton'
+import AddTaskButton from './AddTaskButton'
 
 const TASK_URL = 'http://127.0.0.1:8000/api/tasks/'
 
@@ -25,7 +27,8 @@ export default {
   name: 'Lane',
   components: {
     Task,
-    DeleteLaneButton
+    DeleteLaneButton,
+    AddTaskButton
   },
   props: ['lane'],
   data () {

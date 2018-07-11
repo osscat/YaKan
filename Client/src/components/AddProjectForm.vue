@@ -24,7 +24,11 @@ export default {
           title: document.getElementById('title').value,
           owner_id: 3
         })
-        .then(response => { this.$parent.projects.push(response.data); document.getElementById('title').value = '' })
+        .then(response => {
+          this.$parent.projects.push(response.data)
+          this.$parent.$parent.send('add')
+          document.getElementById('title').value = ''
+        })
     }
   }
 }

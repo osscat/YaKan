@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'django_filters',
     'corsheaders',
+    'YaKanSocket',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -162,3 +164,14 @@ REST_USE_JWT = True
 
 # To make the registration app work. This is required for the django.contrib.sites dependency.
 SITE_ID = 1
+
+ASGI_APPLICATION = "YaKan.routing.application"
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
