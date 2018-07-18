@@ -4,9 +4,8 @@
  */
 <template>
   <el-card class="pjcard">
-    <el-button type="text" @click="moveToBoard">{{ project.title }}</el-button>
-    <br>
-    <DeleteProjectButton :project="project" />
+    <el-button type="text" v-if="project" @click="moveToBoard">{{ project.title }}</el-button>
+    <DeleteProjectButton :project="project" style="float: right;"/>
   </el-card>
 </template>
 
