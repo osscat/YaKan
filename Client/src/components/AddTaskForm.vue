@@ -57,6 +57,10 @@ export default {
         })
         .then(response => {
           console.log(response.status)
+          this.newtitle = null,
+          this.newmanday = null,
+          this.neworder = 0,
+          this.newlabel = null
           this.$parent.$parent.$parent.loadTask()
           this.closeDialog()
         })
