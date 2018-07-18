@@ -4,7 +4,8 @@
  */
 <template>
   <el-card class="pjcard">
-    {{ project.title }}<br>
+    <el-button type="text" @click="moveToBoard">{{ project.title }}</el-button>
+    <br>
     <DeleteProjectButton :project="project" />
   </el-card>
 </template>
@@ -17,7 +18,12 @@ export default {
   components: {
     DeleteProjectButton
   },
-  props: ['project']
+  props: ['project'],
+  methods: {
+    moveToBoard: function () {
+      this.$router.push({name: 'Board', params: { boardid: this.project.id }})
+    }
+  }
 }
 </script>
 
@@ -27,6 +33,7 @@ export default {
   width: 200px;
   height: 200px;
   padding: 10px 0;
+  margin-right: 5px;
   background-color: lightyellow;
   border: solid;
 }
