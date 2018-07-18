@@ -3,10 +3,10 @@
  *  親コンポーネントからプロジェクトのデータ(JSON)を渡してください。
  */
 <template>
-  <div class="flex-container-sub">
+  <el-card class="pjcard">
     {{ project.title }}<br>
     <DeleteProjectButton :project="project" />
-  </div>
+  </el-card>
 </template>
 
 <script>
@@ -23,10 +23,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.flex-container-sub {
+.pjcard {
   width: 200px;
   height: 200px;
-  padding: 20px;
+  padding: 10px 0;
   background-color: lightyellow;
   border: solid;
 }
