@@ -33,7 +33,10 @@ export default {
           status: 0,
           order: 1
         })
-        .then(response => { this.$parent.lanes.push(response.data) })
+        .then(response => {
+          this.$parent.lanes.push(response.data)
+          this.newtitle = ''
+        })
     }
   }
 }
