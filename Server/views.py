@@ -34,7 +34,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class LaneViewSet(viewsets.ModelViewSet):
     queryset = Lane.objects.all()
     serializer_class = LaneSerializer
-
+    filter_fields = ('project_id',)
 
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
