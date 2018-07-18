@@ -21,6 +21,7 @@ import Lane from './Lane'
 import AddLaneForm from './AddLaneForm'
 
 const LANE_URL = 'http://127.0.0.1:8000/api/lanes/'
+const BOARD_URL = 'http://127.0.0.1:8000/api/projects/'
 
 export default {
   name: 'Board',
@@ -28,6 +29,7 @@ export default {
     Lane,
     AddLaneForm
   },
+  props: ['boardid'],
   data () {
     return {
       total: 0,
@@ -36,17 +38,21 @@ export default {
     }
   },
   mounted () {
-    this.getBoard()
+    this.getBoard(this.boardid)
     this.loadLane()
   },
   methods: {
     loadLane: function () {
-      axios.get(LANE_URL).then(response => (this.lanes = response.data))
+      var url = LANE_URL + '?project_id=' + this.boardid
+      axios
+        .get(url)
+        .then(
+          response => (this.lanes = response.data)
+        )
     },
-    // 後で消す
     getBoard: function (id) {
       axios
-        .get('http://127.0.0.1:8000/api/projects/1/')
+        .get(BOARD_URL + id + '/')
         .then(response => (this.board = response.data))
     }
   }
