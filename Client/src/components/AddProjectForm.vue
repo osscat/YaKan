@@ -11,7 +11,7 @@
 <script>
 import axios from 'axios'
 
-const PROJECT_POST_URL = 'http://127.0.0.1:8000/api/projects/'
+const PROJECT_POST_URL = process.env.API_BASE_URL + '/api/projects/'
 
 export default {
   name: 'AddProjectForm',

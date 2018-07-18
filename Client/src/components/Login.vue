@@ -20,7 +20,7 @@
 <script>
 import axios from 'axios'
 
-const URL = 'http://127.0.0.1:8000/rest-auth/login/'
+const URL = process.env.API_BASE_URL + '/rest-auth/login/'
 
 export default {
   name: 'Login',
