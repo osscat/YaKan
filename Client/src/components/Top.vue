@@ -2,13 +2,16 @@
  *  Top コンポーネント。
  */
 <template>
-  <div class="flex-container">
-    <Header />
-    <Project :projects="projects" />
-  </div>
+  <el-container>
+    <Aside @childs-event="loadList"/>
+    <el-main>
+      <Project :projects="projects" />
+    </el-main>
+  </el-container>
 </template>
 
 <script>
+import Aside from './Aside'
 import axios from 'axios'
 import Header from './Header'
 import Project from './Project'
@@ -26,6 +29,7 @@ export default {
   },
   components: {
     Header,
+    Aside,
     Project
   },
   mounted () {
@@ -59,12 +63,17 @@ export default {
       this.loadList()
     },
     loadList: function (word) {
+      var url = LIST_URL
+      if (word) {
+        url += '?title=' + word
+      }
       axios
-        .get(LIST_URL)
+        .get(url)
         .then(
           response => {
             this.projects = response.data
-            this.search(word)
+            console.log(response.data)
+            // this.search(word)
           }
         )
     },
