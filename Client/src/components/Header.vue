@@ -2,9 +2,19 @@
  *  ヘッダーコンポーネント。
  */
 <template>
-  <div style="width:100%;height:100px;background-color:#FFFFAA">
-    ヘッダー部分<br>
-    検索：<input v-model="word" @keyup="loadList()" />
+  <div>
+    <div class="line"></div>
+      <el-menu :default-active="activeIndex1"
+        mode="horizontal"
+        @select="handleSelectIndex"
+        background-color="#545c64"
+        text-color="#fff"
+        active-text-color="#ffd04b">
+      <el-menu-item index="1">プロジェクト一覧</el-menu-item>
+      <el-menu-item index="2" class="loginuser">
+        ログインユーザー(アイコン)
+      </el-menu-item>
+    </el-menu>
   </div>
 </template>
 
@@ -13,13 +23,19 @@ export default {
   name: 'Header',
   data () {
     return {
-      word: null
+      activeIndex1: '1'
     }
   },
   methods: {
-    loadList: function () {
-      this.$parent.loadList(this.word)
+    handleSelectIndex (key, keyPath) {
+      console.log(key, keyPath)
     }
   }
 }
 </script>
+
+<style scoped>
+.loginuser {
+  float: right
+}
+</style>
