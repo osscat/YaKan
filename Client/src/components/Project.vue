@@ -8,7 +8,7 @@
         <ProjectSub :project="project" />
       </div>
     </transition-group>
-    <AddProjectForm />
+    <AddProjectForm style="margin-top: 5px;"/>
   </div>
 </template>
 
