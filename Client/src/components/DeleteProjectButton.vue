@@ -2,9 +2,7 @@
  *  プロジェクトを削除するボタンのコンポーネント。
  */
 <template>
-  <button type="button" @click="deleteProject">
-    削除
-  </button>
+  <el-button type="danger" icon="el-icon-delete" circle @click="openConfirm"></el-button>
 </template>
 
 <script>
@@ -16,6 +14,24 @@ export default {
   name: 'DeleteProjectButton',
   props: ['project'],
   methods: {
+    openConfirm: function () {
+      this.$confirm('プロジェクトを削除しますか?', '削除確認', {
+        confirmButtonText: '削除',
+        cancelButtonText: 'キャンセル',
+        type: 'Confirm'
+      }).then(() => {
+        this.deleteProject()
+        this.$message({
+          type: 'success',
+          message: '削除しました。'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: 'キャンセルしました。'
+        })
+      })
+    },
     deleteProject: function () {
       var url = PROJECT_DELETE_URL + this.project.id + '/'
       axios
