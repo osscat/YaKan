@@ -15,17 +15,22 @@ const PROJECT_POST_URL = process.env.API_BASE_URL + '/api/projects/'
 
 export default {
   name: 'AddProjectForm',
+  data () {
+    return {
+      newtitle: null
+    }
+  },
   methods: {
     addProject: function () {
       axios
         .post(PROJECT_POST_URL, {
-          title: document.getElementById('title').value,
+          title: this.newtitle,
           owner_id: 3
         })
         .then(response => {
           this.$parent.projects.push(response.data)
           this.$parent.$parent.send('add')
-          document.getElementById('title').value = ''
+          this.newtitle = ''
         })
     }
   }
