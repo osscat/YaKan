@@ -10,10 +10,10 @@
       <el-alert v-if="message" :title="message" type="error"></el-alert>
       <el-form ref="form" :model="form" label-width="100px" @submit.native.prevent="login">
         <el-form-item label="ユーザー名">
-          <el-input v-model="form.username" ref="username"></el-input>
+          <el-input name="username" v-model="form.username" autofocus="true" auto-complete="on"></el-input>
         </el-form-item>
         <el-form-item label="パスワード">
-          <el-input type="password" v-model="form.password"></el-input>
+          <el-input name="password" type="password" v-model="form.password"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" native-type="submit">ログイン</el-button>
@@ -38,9 +38,6 @@ export default {
         password: null
       }
     }
-  },
-  mounted () {
-    this.$refs.username.focus()
   },
   methods: {
     login: function () {
