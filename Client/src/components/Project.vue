@@ -3,12 +3,12 @@
  */
 <template>
   <div>
-    <AddProjectForm />
     <transition-group name="demo" tag="div" class="flex-project">
       <div v-for="project in projects" :key="project.id">
         <ProjectSub :project="project" />
       </div>
     </transition-group>
+    <AddProjectForm />
   </div>
 </template>
 
