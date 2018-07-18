@@ -1,14 +1,27 @@
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+  <el-container>
+    <el-header>
+      <Header/>
+    </el-header>
+    <el-container>
+      <el-main>
+        <div id="app">
+          <router-view/>
+        </div>
+      </el-main>
+    </el-container>
+  </el-container>
 </template>
 
 <script>
 import axios from 'axios'
+import Header from './components/Header'
 
 export default {
   name: 'App',
+  components: {
+    Header
+  },
   beforeCreate: function () {
     axios.interceptors.response.use(
       response => response,
