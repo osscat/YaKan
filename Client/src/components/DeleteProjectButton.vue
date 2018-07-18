@@ -21,7 +21,7 @@ export default {
       axios
         .delete(url)
         .then(response => {
-          this.$parent.$parent.$parent.$parent.send('delete')
+          this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.send('delete')
         })
     }
   }
