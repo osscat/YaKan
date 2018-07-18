@@ -2,17 +2,23 @@
  *  ログインコンポーネント。
  */
 <template>
-  <div>
-    <div class="flex-container">
-      <div class="flex-container2">
-        <div style="text-align:center;font-size:30px;">Welcome to Yakan!</div>
-        <img src="../assets/yakan.jpg" />
-        <br>
-        <input v-model="username" type="text" placeholder="username">
-        <input v-model="password" type="password" placeholder="password">
-        <button @click="login()">GO</button>
-        {{message}}
-      </div>
+  <div class="flex-container">
+    <div class="flex-container2">
+      <h2>Welcome to Yakan!</h2>
+      <img src="../assets/yakan.jpg" />
+      <br>
+      <el-alert v-if="message" :title="message" type="error"></el-alert>
+      <el-form ref="form" :model="form" label-width="100px" @submit.native.prevent="login">
+        <el-form-item label="ユーザー名">
+          <el-input v-model="form.username" ref="username"></el-input>
+        </el-form-item>
+        <el-form-item label="パスワード">
+          <el-input type="password" v-model="form.password"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" native-type="submit">ログイン</el-button>
+        </el-form-item>
+      </el-form>
     </div>
   </div>
 </template>
@@ -27,17 +33,22 @@ export default {
   data () {
     return {
       message: null,
-      username: null,
-      password: null
+      form: {
+        username: null,
+        password: null
+      }
     }
+  },
+  mounted () {
+    this.$refs.username.focus()
   },
   methods: {
     login: function () {
       this.message = null
       axios
         .post(URL, {
-          username: this.username,
-          password: this.password
+          username: this.form.username,
+          password: this.form.password
         })
         .then(
           response => {
@@ -66,5 +77,8 @@ export default {
 .flex-container2 {
   display: flex;
   flex-direction: column;
+}
+.el-alert {
+  margin-bottom: 15px;
 }
 </style>
