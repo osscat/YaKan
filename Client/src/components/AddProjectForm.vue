@@ -3,10 +3,8 @@
  */
 <template>
   <form>
-    プロジェクト名<input type="text" id="title" />
-    <button type="button" @click="addProject">
-      登録
-    </button>
+    <el-input id="title" class="newtitle" placeholder="Please input Project-Title" v-model="newtitle"></el-input>
+    <el-button type="primary" @click="addProject">作成</el-button>
   </form>
 </template>
 
@@ -36,4 +34,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.newtitle {
+  width: 200px;
+}
 </style>
