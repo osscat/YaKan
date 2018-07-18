@@ -13,7 +13,7 @@
       </el-submenu>
       <el-menu-item index="1">
         <i class="el-icon-menu"></i>
-        <span slot="title">ユーザー管理</span>
+        <router-link to="/userAdmin">ユーザー管理</router-link>
       </el-menu-item>
     </el-menu>
   </el-aside>

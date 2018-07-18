@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project, ProjectMember, User, Lane, Task, Label
+from .models import Project, ProjectMember, Lane, Task, Label
 
 
 @admin.register(Project)
@@ -10,10 +10,6 @@ class ProjectAdmin(admin.ModelAdmin):
 
 @admin.register(ProjectMember)
 class ProjectMemberAdmin(admin.ModelAdmin):
-    pass
-
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
     pass
 
 @admin.register(Lane)

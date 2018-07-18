@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Top from '@/components/Top'
+import UserAdmin from '@/components/UserAdmin'
 import Login from '@/components/Login'
 import Board from '@/components/Board'
 
@@ -12,6 +13,11 @@ export default new Router({
       path: '/',
       name: 'Top',
       component: Top
+    },
+    {
+      path: '/userAdmin',
+      name: 'UserAdmin',
+      component: UserAdmin
     },
     {
       path: '/login',

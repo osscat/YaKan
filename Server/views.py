@@ -1,6 +1,7 @@
 from django_filters import rest_framework as filters
 from rest_framework import viewsets
-from .models import Project, ProjectMember, User, Lane, Task, Label
+from django.contrib.auth.models import User
+from .models import Project, ProjectMember, Lane, Task, Label
 from .serializer import ProjectSerializer, ProjectMemberSerializer, UserSerializer, LaneSerializer, TaskSerializer, \
     LabelSerializer
 

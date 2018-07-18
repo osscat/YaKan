@@ -16,7 +16,8 @@ import axios from 'axios'
 import Header from './Header'
 import Project from './Project'
 
-const LIST_URL = 'http://127.0.0.1:8000/api/projects/'
+const LIST_URL = process.env.API_BASE_URL + '/api/projects/'
+const SERVER_ADDRESS = process.env.SERVER_ADDRESS
 
 var chatSocket
 
@@ -38,7 +39,7 @@ export default {
   },
   methods: {
     initWebSocket: function () {
-      var serverHost = 'localhost:8000'
+      var serverHost = SERVER_ADDRESS
       chatSocket = new WebSocket(
         'ws://' + serverHost +
         '/ws/chat/echo/')
