@@ -4,14 +4,13 @@
 <template>
   <div class="flex-container">
     <div>
-      <h3>{{lane.title}}</h3>
+      <h3>{{lane.title}}<DeleteLaneButton :laneid="lane.id" style="float: right;"></DeleteLaneButton></h3>
       <h4>レーン合計 : {{laneTotal}} (md)</h4>
     </div>
     <p v-for="task in tasks" :key="task.id">
       <Task :task="task" />
     </p>
     <AddTaskButton :laneid="lane.id" style="float: left" ></AddTaskButton>
-    <DeleteLaneButton :laneid="lane.id"></DeleteLaneButton>
   </div>
 </template>
 
