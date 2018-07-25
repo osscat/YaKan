@@ -10,8 +10,8 @@
 <script>
 import axios from 'axios'
 
-const LANE_DELETE_URL = 'http://localhost:8000/api/lanes/'
-const TASK_DELETE_URL = 'http://localhost:8000/api/tasks/'
+const LANE_DELETE_URL = process.env.API_BASE_URL + '/api/lanes/'
+const TASK_DELETE_URL = process.env.API_BASE_URL + '/api/tasks/'
 
 export default {
   name: 'DeleteLaneButton',
