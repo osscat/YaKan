@@ -20,7 +20,7 @@ import Task from './task'
 import DeleteLaneButton from './DeleteLaneButton'
 import AddTaskButton from './AddTaskButton'
 
-const TASK_URL = 'http://127.0.0.1:8000/api/tasks/'
+const TASK_URL = process.env.API_BASE_URL + '/api/tasks/'
 
 export default {
   name: 'Lane',
