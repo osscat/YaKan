@@ -27,7 +27,7 @@
 <script>
 import axios from 'axios'
 
-const TASK_POST_URL = 'http://localhost:8000/api/tasks/'
+const TASK_POST_URL = process.env.API_BASE_URL + '/api/tasks/'
 
 export default {
   name: 'AddLaneForm',
