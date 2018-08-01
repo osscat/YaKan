@@ -27,6 +27,7 @@ export default {
       response => response,
       error => {
         if (error.response.status === 401) {
+          delete axios.defaults.headers.common['Authorization']
           this.$router.push({name: 'Login'})
         }
         return Promise.reject(error)
