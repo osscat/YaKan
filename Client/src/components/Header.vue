@@ -4,18 +4,18 @@
 <template>
   <div>
     <div class="line"></div>
-    <el-menu :default-active="activeIndex1"
+    <el-menu default-active="1"
       mode="horizontal"
-      @select="handleSelectIndex"
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b">
-      <el-menu-item index="1">プロジェクト一覧</el-menu-item>
-      <el-submenu index="2" class="loginuser">
+      <el-menu-item index="1" @click="$router.push({name: 'Project'})">プロジェクト一覧</el-menu-item>
+      <el-menu-item index="9" @click="$router.push({name: 'UserAdmin'})">ユーザー管理</el-menu-item>
+      <el-submenu index="10" class="loginuser">
         <template slot="title">{{ displayName }} さん</template>
-        <el-menu-item index="2-1">ユーザー情報編集</el-menu-item>
-        <el-menu-item index="2-2" @click="changePasswordFormVisible = true">パスワード変更</el-menu-item>
-        <el-menu-item index="2-3" @click="logout">ログアウト</el-menu-item>
+        <el-menu-item index="10-1">ユーザー情報編集</el-menu-item>
+        <el-menu-item index="10-2" @click="changePasswordFormVisible = true">パスワード変更</el-menu-item>
+        <el-menu-item index="10-3" @click="logout">ログアウト</el-menu-item>
       </el-submenu>
     </el-menu>
     <ChangePasswordForm :visible.sync="changePasswordFormVisible" />
@@ -34,8 +34,7 @@ export default {
   data () {
     return {
       user: null,
-      changePasswordFormVisible: false,
-      activeIndex1: '1'
+      changePasswordFormVisible: false
     }
   },
   components: {
@@ -63,9 +62,6 @@ export default {
     }
   },
   methods: {
-    handleSelectIndex (key, keyPath) {
-      console.log(key, keyPath)
-    },
     logout () {
       axios.post(URL_LOGOUT)
       this.$router.push({name: 'Login'})

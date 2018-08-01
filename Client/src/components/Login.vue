@@ -50,7 +50,7 @@ export default {
         .then(
           response => {
             axios.defaults.headers.common['Authorization'] = 'JWT ' + response.data.token
-            this.$router.push({name: 'Top'})
+            this.$router.push({name: 'Project'})
           }
         )
         .catch(

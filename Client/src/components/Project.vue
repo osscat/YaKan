@@ -3,6 +3,11 @@
  */
 <template>
   <div>
+    <form>
+      <i class="el-icon-search"></i>
+      <span>検索</span>
+      <el-input placeholder="Project Name" class="search" v-model="word" @keyup.native="loadList(word)"></el-input>
+    </form>
     <transition-group name="demo" tag="div" class="flex-project">
       <div v-for="project in projects" :key="project.id">
         <ProjectSub :project="project" />
@@ -15,13 +20,69 @@
 <script>
 import ProjectSub from './ProjectSub'
 import AddProjectForm from './AddProjectForm'
+import axios from 'axios'
+
+const LIST_URL = process.env.API_BASE_URL + '/api/projects/'
+const SERVER_ADDRESS = process.env.SERVER_ADDRESS
+
+var chatSocket
 
 export default {
   name: 'Project',
-  props: ['projects'],
   components: {
     ProjectSub,
     AddProjectForm
+  },
+  data () {
+    return {
+      projects: null,
+      word: null
+    }
+  },
+  mounted () {
+    this.initWebSocket()
+    this.loadList()
+  },
+  methods: {
+    initWebSocket: function () {
+      var serverHost = SERVER_ADDRESS
+      chatSocket = new WebSocket(
+        'ws://' + serverHost +
+        '/ws/chat/echo/')
+
+      chatSocket.onmessage = this.onMessage
+
+      chatSocket.onclose = function (e) {
+        console.error('Chat socket closed unexpectedly')
+      }
+    },
+    // **
+    //  * 処理の種類を WebSocket でサーバーに送ります。
+    //  * transaction : add, delete
+    //  *
+    send: function (transaction) {
+      console.log(transaction)
+      chatSocket.send(JSON.stringify({
+        'transaction': transaction
+      }))
+    },
+    onMessage: function (e) {
+      this.loadList()
+    },
+    loadList: function (word) {
+      var url = LIST_URL
+      if (word) {
+        url += '?title=' + word
+      }
+      axios
+        .get(url)
+        .then(
+          response => {
+            this.projects = response.data
+            console.log(response.data)
+          }
+        )
+    }
   }
 }
 </script>
@@ -52,5 +113,9 @@ export default {
 }
 .demo-leave-active {
   position: absolute;
+}
+.search {
+  margin-bottom: 10px;
+  width: 200px;
 }
 </style>

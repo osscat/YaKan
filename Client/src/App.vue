@@ -1,16 +1,7 @@
 <template>
-  <el-container>
-    <el-header>
-      <Header/>
-    </el-header>
-    <el-container>
-      <el-main>
-        <div id="app">
-          <router-view/>
-        </div>
-      </el-main>
-    </el-container>
-  </el-container>
+  <div id="app">
+    <router-view/>
+  </div>
 </template>
 
 <script>
