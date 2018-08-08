@@ -20,7 +20,7 @@
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b">
-      <el-menu-item index="/">プロジェクト一覧</el-menu-item>
+      <el-menu-item index="/">プロジェクト</el-menu-item>
       <el-menu-item index="/userAdmin">ユーザー管理</el-menu-item>
     </el-menu>
     <EditAccountForm :visible.sync="editAccountFormVisible" :user="user" @save="loadUser" />
