@@ -13,7 +13,7 @@
       </div>
       <div id="detail">
         <span>タイトル</span>
-        <el-input v-model="task.title" placeholder="" @change="updateTask"></el-input>
+        <el-input type="textarea" v-model="task.title" @change="updateTask"></el-input>
         <span>工数(ManDay)</span>
         <el-input-number v-model="task.man_day" style="width: 100%" controls-position="right" :min="0" :max="99" @change="updateTask"/>
         <span>担当者</span>
