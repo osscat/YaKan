@@ -9,9 +9,10 @@
       <el-table-column prop="last_name" label="姓" sortable></el-table-column>
       <el-table-column prop="first_name" label="名" sortable></el-table-column>
       <el-table-column prop="is_active" label="有効" sortable>
-        <template slot-scope="scope">
-          <span>{{scope.row.is_active}}</span>
-          <el-button type="danger" size="small">無効化する</el-button>
+        <template slot-scope="{ row: user }">
+          <span>{{user.is_active}}</span>
+          <el-button v-if="user.is_active" type="danger" size="small" @click="toggleActive(user)">無効化する</el-button>
+          <el-button v-if="!user.is_active" type="success" size="small" @click="toggleActive(user)">有効化する</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -70,6 +71,23 @@ export default {
         .then(
           response => {
             this.users = response.data
+          }
+        )
+    },
+    toggleActive: function (user) {
+      this.message = null
+      axios
+        .patch(URL_LIST + user.id + '/', {
+          is_active: !user.is_active
+        })
+        .then(
+          response => {
+            this.load()
+          }
+        )
+        .catch(
+          error => {
+            this.message = error.response.data
           }
         )
     },
