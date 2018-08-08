@@ -2,10 +2,7 @@
  *  プロジェクトを表示するコンポーネント。
  */
 <template>
-  <div v-if="board" class="flex-container">
-    <div>
-      <h3>{{board.title}} / 全合計 : {{total}} (md)</h3>
-    </div>
+  <div v-if="board" class="board">
     <p v-for="lane in lanes" :key="lane.id">
       <Lane :lane="lane" />
     </p>
@@ -66,5 +63,35 @@ export default {
   width: 95%;
   margin: 5px;
   padding: 10px;
+}
+.board {
+  -webkit-box-align: start;
+  -moz-box-align: start;
+  -o-box-align: start;
+  -ms-flex-align: start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  -o-box-orient: horizontal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: auto;
+  position: absolute;
+  left: 20;
+  right: 20;
+  top: 20;
+  bottom: 20;
+}
+.board p {
+  padding-left: 5px;
 }
 </style>
