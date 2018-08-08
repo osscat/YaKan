@@ -23,9 +23,6 @@ import AddProjectForm from './AddProjectForm'
 import axios from 'axios'
 
 const LIST_URL = process.env.API_BASE_URL + '/api/projects/'
-const SERVER_ADDRESS = process.env.SERVER_ADDRESS
-
-var chatSocket
 
 export default {
   name: 'Project',
@@ -45,26 +42,7 @@ export default {
   },
   methods: {
     initWebSocket: function () {
-      var serverHost = SERVER_ADDRESS
-      chatSocket = new WebSocket(
-        'ws://' + serverHost +
-        '/ws/chat/echo/')
-
-      chatSocket.onmessage = this.onMessage
-
-      chatSocket.onclose = function (e) {
-        console.error('Chat socket closed unexpectedly')
-      }
-    },
-    // **
-    //  * 処理の種類を WebSocket でサーバーに送ります。
-    //  * transaction : add, delete
-    //  *
-    send: function (transaction) {
-      console.log(transaction)
-      chatSocket.send(JSON.stringify({
-        'transaction': transaction
-      }))
+      this.$webSocket.$on('message', this.loadList)
     },
     onMessage: function (e) {
       this.loadList()

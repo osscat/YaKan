@@ -6,8 +6,10 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import locale from 'element-ui/lib/locale/lang/ja'
 import router from './router'
+import WebSocket from './plugins/WebSocket'
 
 Vue.use(ElementUI, { locale })
+Vue.use(WebSocket)
 
 Vue.config.productionTip = false
 

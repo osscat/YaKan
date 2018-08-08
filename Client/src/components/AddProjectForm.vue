@@ -29,7 +29,7 @@ export default {
         })
         .then(response => {
           this.$parent.projects.push(response.data)
-          this.$parent.$parent.$parent.$parent.send('add')
+          this.$webSocket.send('add')
           this.newtitle = ''
         })
     }
