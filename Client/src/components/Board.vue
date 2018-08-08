@@ -3,12 +3,12 @@
  */
 <template>
   <div v-if="board" class="board">
-    <p v-for="lane in lanes" :key="lane.id">
-      <Lane :lane="lane" />
-    </p>
     <div>
       <AddLaneForm :projectid="board.id"></AddLaneForm>
     </div>
+    <p v-for="lane in lanes" :key="lane.id">
+      <Lane :lane="lane" />
+    </p>
   </div>
 </template>
 
