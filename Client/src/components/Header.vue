@@ -16,7 +16,7 @@
     </el-dropdown>
     <el-menu default-active="/"
       mode="horizontal"
-      router="true"
+      :router="true"
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b">
