@@ -16,7 +16,7 @@
 
 <script>
 import axios from 'axios'
-import Task from './task'
+import Task from './Task'
 import DeleteLaneButton from './DeleteLaneButton'
 import AddTaskButton from './AddTaskButton'
 
