@@ -5,7 +5,7 @@
     <div>
         <el-form>
             <el-form-item label="タイトル" :label-width="formLabelWidth">
-                <el-input id="title" class="newtitle" placeholder="Please input Task-Title" v-model="newtitle"></el-input>
+                <el-input type="textarea" id="title" class="newtitle" :rows="1" v-model="newtitle"></el-input>
             </el-form-item>
             <el-form-item label="工数" :label-width="formLabelWidth">
                 <el-input-number style="width: 130px;" v-model="newmanday" :min="0" :max="99"></el-input-number>
@@ -14,7 +14,7 @@
                 <el-input-number style="width: 130px;" v-model="neworder"></el-input-number>
             </el-form-item>
             <el-form-item label="ラベル" :label-width="formLabelWidth">
-                <el-input-number style="width: 130px;" v-model="newlabel"></el-input-number>
+              <SelectLabel :selected="0" v-on:onSelect="labelselect"></SelectLabel>
             </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
@@ -26,11 +26,15 @@
 
 <script>
 import axios from 'axios'
+import SelectLabel from './SelectLabel'
 
 const TASK_POST_URL = process.env.API_BASE_URL + '/api/tasks/'
 
 export default {
   name: 'AddLaneForm',
+  components: {
+    SelectLabel
+  },
   props: ['laneid', 'formLabelWidth'],
   data () {
     return {
@@ -53,7 +57,7 @@ export default {
           man_day: this.newmanday,
           status: 0,
           lane_id: this.laneid,
-          label_id: 0
+          label_id: this.newlabel
         })
         .then(response => {
           console.log(response.status)
@@ -67,6 +71,9 @@ export default {
     },
     closeDialog: function () {
       this.$parent.$parent.dialogFormVisible = false
+    },
+    labelselect: function (select) {
+      this.newlabel = select
     }
   }
 }
