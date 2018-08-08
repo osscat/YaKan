@@ -2,10 +2,11 @@
  *  レーンを表示するコンポーネント。
  */
 <template>
-  <div class="flex-container">
+  <div class="lane">
     <div>
-      <h3>{{lane.title}}<DeleteLaneButton :laneid="lane.id" style="float: right;"></DeleteLaneButton></h3>
-      <h4>レーン合計 : {{laneTotal}} (md)</h4>
+      <span class="lane-title">{{lane.title}}</span><br>
+      <DeleteLaneButton :laneid="lane.id" style="float: right;"></DeleteLaneButton>
+      <span class="lane-total">{{laneTotal}} (md)</span>
     </div>
     <p v-for="task in tasks" :key="task.id">
       <Task :task="task" />
@@ -16,7 +17,7 @@
 
 <script>
 import axios from 'axios'
-import Task from './task'
+import Task from './Task'
 import DeleteLaneButton from './DeleteLaneButton'
 import AddTaskButton from './AddTaskButton'
 
@@ -63,5 +64,46 @@ export default {
   width: 20%;
   padding: 10px;
   background-color: lightblue;
+}
+.lane {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -o-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -o-box-flex: 1;
+  -webkit-flex: 0 0 270px;
+  -ms-flex: 0 0 270px;
+  flex: 0 0 270px;
+  position: relative;
+  background: #dedede;
+  height: 100%;
+  border-left: 1px solid #ccc;
+  padding: 10px;
+  float: left;
+  background-color: lightblue;
+  width: 220px;
+}
+.lane p {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.lane-title {
+  font-size: 1.2em;
+}
+.lane-total {
+  font-size: 1em;
 }
 </style>
