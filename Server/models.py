@@ -26,11 +26,11 @@ class Lane(models.Model):
 class Task(models.Model):
     title = models.TextField(blank=False)
     order = models.IntegerField(blank=False)
-    user_id = models.IntegerField(blank=False)
+    user_id = models.IntegerField(blank=True,null=True)
     man_day = models.FloatField(blank=False)
     status = models.IntegerField(default=0, blank=False)
     lane_id = models.IntegerField(blank=False)
-    label_id = models.IntegerField(blank=True)
+    label_id = models.IntegerField(blank=True,null=True)
     delete_flag = models.IntegerField(default=0, blank=False)
 
 
