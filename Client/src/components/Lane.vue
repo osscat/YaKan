@@ -5,7 +5,7 @@
   <div class="lane">
     <div>
       <span class="lane-title">{{lane.title}}</span><br>
-      <DeleteLaneButton :laneid="lane.id" style="float: right;"></DeleteLaneButton>
+      <DeleteLaneButton :lane="lane" style="float: right;"></DeleteLaneButton>
       <span class="lane-total">{{laneTotal}} (md)</span>
     </div>
     <p v-for="task in tasks" :key="task.id">

@@ -1,3 +1,6 @@
+export const EV_PROJECT_LIST = 'projects'
+export const EV_PROJECT = 'project'
+
 const URL = 'ws://' + process.env.SERVER_ADDRESS + '/ws/chat/echo/'
 
 const webSocket = {
@@ -10,13 +13,16 @@ const webSocket = {
         this.socket.onmessage = this.onMessage
       },
       methods: {
-        send: function (transaction) {
-          this.socket.send(JSON.stringify({
-            'transaction': transaction
-          }))
+        send: function (event, id) {
+          const data = { 'target': event }
+          if (id) {
+            data.id = id
+          }
+          this.socket.send(JSON.stringify(data))
         },
-        onMessage: function () {
-          this.$emit('message')
+        onMessage: function (e) {
+          const data = JSON.parse(e.data)
+          this.$emit(data.target, data.id)
         }
       }
     })

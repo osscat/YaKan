@@ -23,6 +23,7 @@
 <script>
 import ProjectSub from './ProjectSub'
 import AddProjectForm from './AddProjectForm'
+import { EV_PROJECT_LIST } from '../plugins/WebSocket'
 import axios from 'axios'
 
 const LIST_URL = process.env.API_BASE_URL + '/api/projects/'
@@ -40,16 +41,10 @@ export default {
     }
   },
   mounted () {
-    this.initWebSocket()
+    this.$webSocket.$on(EV_PROJECT_LIST, this.loadList)
     this.loadList()
   },
   methods: {
-    initWebSocket: function () {
-      this.$webSocket.$on('message', this.loadList)
-    },
-    onMessage: function (e) {
-      this.loadList()
-    },
     loadList: function (word) {
       var url = LIST_URL
       if (word) {
@@ -60,7 +55,6 @@ export default {
         .then(
           response => {
             this.projects = response.data
-            console.log(response.data)
           }
         )
     }
