@@ -1,5 +1,6 @@
-export const EV_PROJECT_LIST = 'projects'
 export const EV_PROJECT = 'project'
+export const EV_LANE = 'lane'
+export const EV_TASK = 'task'
 
 const URL = 'ws://' + process.env.SERVER_ADDRESS + '/ws/chat/echo/'
 
@@ -14,9 +15,9 @@ const webSocket = {
       },
       methods: {
         send: function (event, id) {
-          const data = { 'target': event }
-          if (id) {
-            data.id = id
+          const data = {
+            'target': event,
+            'id': id
           }
           this.socket.send(JSON.stringify(data))
         },

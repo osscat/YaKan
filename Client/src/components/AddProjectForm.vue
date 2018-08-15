@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { EV_PROJECT_LIST } from '../plugins/WebSocket'
+import { EV_PROJECT } from '../plugins/WebSocket'
 import axios from 'axios'
 
 const PROJECT_POST_URL = process.env.API_BASE_URL + '/api/projects/'
@@ -30,7 +30,7 @@ export default {
         })
         .then(response => {
           this.$parent.projects.push(response.data)
-          this.$webSocket.send(EV_PROJECT_LIST)
+          this.$webSocket.send(EV_PROJECT)
           this.newtitle = ''
         })
     }

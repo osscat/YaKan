@@ -27,6 +27,7 @@
 <script>
 import axios from 'axios'
 import SelectLabel from './SelectLabel'
+import { EV_TASK } from '../plugins/WebSocket'
 
 const TASK_POST_URL = process.env.API_BASE_URL + '/api/tasks/'
 
@@ -65,7 +66,7 @@ export default {
           this.newmanday = null
           this.neworder = 0
           this.newlabel = null
-          this.$parent.$parent.$parent.loadTask()
+          this.$webSocket.send(EV_TASK, this.laneid)
           this.closeDialog()
         })
     },

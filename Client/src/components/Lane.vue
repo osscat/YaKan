@@ -20,6 +20,7 @@ import axios from 'axios'
 import Task from './Task'
 import DeleteLaneButton from './DeleteLaneButton'
 import AddTaskButton from './AddTaskButton'
+import { EV_TASK } from '../plugins/WebSocket'
 
 const TASK_URL = process.env.API_BASE_URL + '/api/tasks/'
 
@@ -38,6 +39,7 @@ export default {
   },
   mounted () {
     this.loadTask()
+    this.$webSocket.$on(EV_TASK, this.reloadTask)
   },
   computed: {
     laneTotal: function () {
@@ -53,6 +55,11 @@ export default {
   methods: {
     loadTask: function () {
       axios.get(TASK_URL + '?lane_id=' + this.lane.id).then(response => (this.tasks = response.data))
+    },
+    reloadTask: function (id) {
+      if (id === this.lane.id) {
+        this.loadTask()
+      }
     }
   }
 }

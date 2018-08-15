@@ -10,7 +10,7 @@
 
 <script>
 import axios from 'axios'
-import { EV_PROJECT } from '../plugins/WebSocket'
+import { EV_LANE } from '../plugins/WebSocket'
 
 const LANE_POST_URL = process.env.API_BASE_URL + '/api/lanes/'
 
@@ -35,7 +35,7 @@ export default {
           order: 1
         })
         .then(response => {
-          this.$webSocket.send(EV_PROJECT, this.projectid)
+          this.$webSocket.send(EV_LANE, this.projectid)
           this.newtitle = ''
         })
     }
