@@ -2,13 +2,19 @@
  *  プロジェクトを表示するコンポーネント。
  */
 <template>
-  <div v-if="board" class="board">
-    <div>
-      <AddLaneForm :projectid="board.id"></AddLaneForm>
+  <div>
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ name: 'Project' }">プロジェクト一覧</el-breadcrumb-item>
+      <el-breadcrumb-item>{{board ? board.title : ''}}</el-breadcrumb-item>
+    </el-breadcrumb>
+    <div v-if="board" class="board">
+      <div>
+        <AddLaneForm :projectid="board.id"></AddLaneForm>
+      </div>
+      <p v-for="lane in lanes" :key="lane.id">
+        <Lane :lane="lane" />
+      </p>
     </div>
-    <p v-for="lane in lanes" :key="lane.id">
-      <Lane :lane="lane" />
-    </p>
   </div>
 </template>
 
@@ -58,6 +64,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.el-breadcrumb {
+  margin-bottom: 20px;
+}
 .flex-container {
   float: left;
   width: 95%;

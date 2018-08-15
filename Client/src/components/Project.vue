@@ -3,6 +3,9 @@
  */
 <template>
   <div>
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item>プロジェクト一覧</el-breadcrumb-item>
+    </el-breadcrumb>
     <form>
       <i class="el-icon-search"></i>
       <span>検索</span>
@@ -66,6 +69,9 @@ export default {
 </script>
 
 <style scoped>
+.el-breadcrumb {
+  margin-bottom: 20px;
+}
 .flex-project {
   width: 100%;
   display: flex;
