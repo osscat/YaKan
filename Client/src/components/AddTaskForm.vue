@@ -53,7 +53,7 @@ export default {
         .post(TASK_POST_URL, {
           title: this.newtitle,
           order: this.neworder,
-          user_id: 0,
+          user_id: null,
           man_day: this.newmanday,
           status: 0,
           lane_id: this.laneid,
