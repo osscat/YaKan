@@ -2,13 +2,19 @@
  *  プロジェクトを表示するコンポーネント。
  */
 <template>
-  <div v-if="board" class="board">
-    <div>
-      <AddLaneForm :projectid="board.id"></AddLaneForm>
+  <div>
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ name: 'Project' }">プロジェクト一覧</el-breadcrumb-item>
+      <el-breadcrumb-item>{{board ? board.title : ''}}</el-breadcrumb-item>
+    </el-breadcrumb>
+    <div v-if="board" class="board">
+      <div>
+        <AddLaneForm :projectid="board.id"></AddLaneForm>
+      </div>
+      <p v-for="lane in lanes" :key="lane.id">
+        <Lane :lane="lane" />
+      </p>
     </div>
-    <p v-for="lane in lanes" :key="lane.id">
-      <Lane :lane="lane" />
-    </p>
   </div>
 </template>
 
@@ -16,6 +22,7 @@
 import axios from 'axios'
 import Lane from './Lane'
 import AddLaneForm from './AddLaneForm'
+import { EV_PROJECT } from '../plugins/WebSocket'
 
 const LANE_URL = process.env.API_BASE_URL + '/api/lanes/'
 const BOARD_URL = process.env.API_BASE_URL + '/api/projects/'
@@ -37,6 +44,7 @@ export default {
   mounted () {
     this.getBoard(this.boardid)
     this.loadLane()
+    this.$webSocket.$on(EV_PROJECT, this.reloadLane)
   },
   methods: {
     loadLane: function () {
@@ -46,6 +54,11 @@ export default {
         .then(
           response => (this.lanes = response.data)
         )
+    },
+    reloadLane: function (id) {
+      if (id === this.boardid) {
+        this.loadLane()
+      }
     },
     getBoard: function (id) {
       axios
@@ -58,6 +71,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.el-breadcrumb {
+  margin-bottom: 20px;
+}
 .flex-container {
   float: left;
   width: 95%;

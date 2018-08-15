@@ -9,13 +9,14 @@
 
 <script>
 import axios from 'axios'
+import { EV_PROJECT } from '../plugins/WebSocket'
 
 const LANE_DELETE_URL = process.env.API_BASE_URL + '/api/lanes/'
 const TASK_DELETE_URL = process.env.API_BASE_URL + '/api/tasks/'
 
 export default {
   name: 'DeleteLaneButton',
-  props: ['laneid'],
+  props: ['lane'],
   methods: {
     openConfirm: function () {
       this.$confirm('レーンを削除しますか?', '削除確認', {
@@ -36,35 +37,25 @@ export default {
       })
     },
     deleteLane: function () {
-      var url = LANE_DELETE_URL + this.laneid + '/'
+      var url = LANE_DELETE_URL + this.lane.id + '/'
       axios
         .delete(url)
         .then(response => {
           console.log(response)
           if (response.status === 204) {
             this.deletetasks()
+            this.$webSocket.send(EV_PROJECT, this.lane.project_id)
           }
         })
-      this.removeElement(this.laneid)
     },
     deletetasks: function () {
       // TODO:物理削除じゃなくて論理削除？
-      var url = TASK_DELETE_URL + '?lane_id=' + this.laneid
+      var url = TASK_DELETE_URL + '?lane_id=' + this.lane.id
       axios
         .delete(url)
         .then(response => {
           console.log(response)
         })
-    },
-    removeElement: function (id) {
-      var data = this.$parent.$parent.lanes.filter(
-        function (item, index) {
-          if (item.id !== id) {
-            return true
-          }
-        }
-      )
-      this.$parent.$parent.lanes = data
     }
   }
 }
