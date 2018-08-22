@@ -25,6 +25,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
 class ProjectMemberViewSet(viewsets.ModelViewSet):
     queryset = ProjectMember.objects.all()
     serializer_class = ProjectMemberSerializer
+    filter_fields = ('project_id',)
 
 
 class UserViewSet(viewsets.ModelViewSet):
