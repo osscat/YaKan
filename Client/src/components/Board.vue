@@ -11,8 +11,8 @@
       <div>
         <AddLaneForm :projectid="board.id"></AddLaneForm>
       </div>
-      <p v-for="lane in lanes" :key="lane.id">
-        <Lane :lane="lane" />
+      <p v-for="lane in lanes" :key="lane.id" style="margin-top: 0px;">
+        <Lane :projectid="board.id" :lane="lane" />
       </p>
     </div>
   </div>
