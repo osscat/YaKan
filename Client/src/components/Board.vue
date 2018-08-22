@@ -7,12 +7,13 @@
       <el-breadcrumb-item :to="{ name: 'Project' }">プロジェクト一覧</el-breadcrumb-item>
       <el-breadcrumb-item>{{board ? board.title : ''}}</el-breadcrumb-item>
     </el-breadcrumb>
+    <p>総工数 {{ allMd }} (md)</p>
     <div v-if="board" class="board">
       <div>
         <AddLaneForm :projectid="board.id"></AddLaneForm>
       </div>
       <p v-for="lane in lanes" :key="lane.id" style="margin-top: 0px;">
-        <Lane :projectid="board.id" :lane="lane" />
+        <Lane :projectid="board.id" :lane="lane" v-on:calctotal="calc" />
       </p>
     </div>
   </div>
@@ -36,9 +37,9 @@ export default {
   props: ['boardid'],
   data () {
     return {
-      total: 0,
       board: null,
-      lanes: null
+      lanes: null,
+      lanetotal: {}
     }
   },
   mounted () {
@@ -46,7 +47,21 @@ export default {
     this.loadLane()
     this.$webSocket.$on(EV_LANE, this.reloadLane)
   },
+  computed: {
+    allMd () {
+      var all = 0
+      if (this.lanetotal) {
+        for (var t in this.lanetotal) {
+          all += this.lanetotal[t]
+        }
+      }
+      return all
+    }
+  },
   methods: {
+    calc: function (l) {
+      this.$set(this.lanetotal, l[0], l[1])
+    },
     loadLane: function () {
       var url = LANE_URL + '?project_id=' + this.boardid
       axios
