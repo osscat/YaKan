@@ -17,7 +17,7 @@
         <span>工数(ManDay)</span>
         <el-input-number v-model="task.man_day" style="width: 100%" controls-position="right" :min="0" :max="99" @change="updateTask"/>
         <span>担当者</span>
-        <SelectUser :selected="task.user_id"></SelectUser>
+        <SelectUser :selected="task.user_id" :projectid="projectid"></SelectUser>
         <span>ラベル</span>
         <SelectLabel :selected="task.label_id"></SelectLabel>
         <el-checkbox v-model="status" @change="changeStatus">完了</el-checkbox>
@@ -40,7 +40,7 @@ export default {
     SelectLabel,
     SelectUser
   },
-  props: ['task'],
+  props: ['projectid', 'task'],
   data () {
     return {
       bodyStyle: {
