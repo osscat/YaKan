@@ -9,10 +9,10 @@
 
 <script>
 import axios from 'axios'
-import { EV_PROJECT } from '../plugins/WebSocket'
+import { EV_LANE } from '../plugins/WebSocket'
 
 const LANE_DELETE_URL = process.env.API_BASE_URL + '/api/lanes/'
-const TASK_DELETE_URL = process.env.API_BASE_URL + '/api/tasks/'
+const TASK_DELETE_URL = process.env.API_BASE_URL + '/api/tasks/bulk_delete/'
 
 export default {
   name: 'DeleteLaneButton',
@@ -44,15 +44,15 @@ export default {
           console.log(response)
           if (response.status === 204) {
             this.deletetasks()
-            this.$webSocket.send(EV_PROJECT, this.lane.project_id)
+            this.$webSocket.send(EV_LANE, this.lane.project_id)
           }
         })
     },
     deletetasks: function () {
-      // TODO:物理削除じゃなくて論理削除？
-      var url = TASK_DELETE_URL + '?lane_id=' + this.lane.id
       axios
-        .delete(url)
+        .post(TASK_DELETE_URL, {
+          lane_id: this.lane.id
+        })
         .then(response => {
           console.log(response)
         })

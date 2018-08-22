@@ -23,7 +23,7 @@
 <script>
 import ProjectSub from './ProjectSub'
 import AddProjectForm from './AddProjectForm'
-import { EV_PROJECT_LIST } from '../plugins/WebSocket'
+import { EV_PROJECT } from '../plugins/WebSocket'
 import axios from 'axios'
 
 const LIST_URL = process.env.API_BASE_URL + '/api/projects/'
@@ -41,7 +41,7 @@ export default {
     }
   },
   mounted () {
-    this.$webSocket.$on(EV_PROJECT_LIST, this.loadList)
+    this.$webSocket.$on(EV_PROJECT, this.loadList)
     this.loadList()
   },
   methods: {

@@ -22,7 +22,7 @@
 import axios from 'axios'
 import Lane from './Lane'
 import AddLaneForm from './AddLaneForm'
-import { EV_PROJECT } from '../plugins/WebSocket'
+import { EV_LANE } from '../plugins/WebSocket'
 
 const LANE_URL = process.env.API_BASE_URL + '/api/lanes/'
 const BOARD_URL = process.env.API_BASE_URL + '/api/projects/'
@@ -44,7 +44,7 @@ export default {
   mounted () {
     this.getBoard(this.boardid)
     this.loadLane()
-    this.$webSocket.$on(EV_PROJECT, this.reloadLane)
+    this.$webSocket.$on(EV_LANE, this.reloadLane)
   },
   methods: {
     loadLane: function () {
