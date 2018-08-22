@@ -1,4 +1,4 @@
-/**
+  /**
  *  レーンを表示するコンポーネント。
  */
 <template>
@@ -9,7 +9,7 @@
       <span class="lane-total">{{laneTotal}} (md)</span>
     </div>
     <p v-for="task in tasks" :key="task.id">
-      <Task :task="task" />
+      <Task :projectid="projectid" :task="task" />
     </p>
     <AddTaskButton :laneid="lane.id" style="float: left" ></AddTaskButton>
   </div>
@@ -30,7 +30,7 @@ export default {
     DeleteLaneButton,
     AddTaskButton
   },
-  props: ['lane'],
+  props: ['projectid', 'lane'],
   data () {
     return {
       tasks: null
