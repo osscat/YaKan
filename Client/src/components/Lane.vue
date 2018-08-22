@@ -46,9 +46,12 @@ export default {
       var total = 0
       if (this.tasks) {
         this.tasks.forEach(task => {
-          total += task.man_day
+          if (task.status === 0) {
+            total += task.man_day
+          }
         })
       }
+      this.$emit('calctotal', [this.lane.id, total])
       return total
     }
   },
