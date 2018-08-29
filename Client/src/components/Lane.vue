@@ -8,7 +8,7 @@
       <DeleteLaneButton :lane="lane" style="float: right;"></DeleteLaneButton>
       <span class="lane-total">{{laneTotal}} (md)</span>
     </div>
-    <draggable v-model="tasks" @change="onChange" :options="dragoptions">
+    <draggable v-model="tasks" @change="onChange" :options="dragoptions" style="min-height: 10px">
       <p v-for="task in tasks" :key="task.id">
         <Task :projectid="projectid" :task="task" />
       </p>
@@ -41,7 +41,7 @@ export default {
       tasks: null,
       dragoptions: {
         animation: 200,
-        group: 'tasks'
+        group: 'taskgroup'
       }
     }
   },
@@ -82,14 +82,14 @@ export default {
           .then(response => {
           })
         // 並び順を更新する
-        this.reOrder()
+        this.taskReOrder()
       }
       if (event.moved) {
         // 並び順を更新する
-        this.reOrder()
+        this.taskReOrder()
       }
     },
-    reOrder: function () {
+    taskReOrder: function () {
       var index = 0
       this.tasks.forEach(task => {
         this.updateOrder(task, index++)
