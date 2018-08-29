@@ -37,7 +37,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class LaneViewSet(viewsets.ModelViewSet):
-    queryset = Lane.objects.all()
+    queryset = Lane.objects.all().order_by('order')
     serializer_class = LaneSerializer
     filter_fields = ('project_id',)
 
