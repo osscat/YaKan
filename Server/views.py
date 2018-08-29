@@ -43,14 +43,23 @@ class LaneViewSet(viewsets.ModelViewSet):
 
 
 class TaskViewSet(viewsets.ModelViewSet):
-    queryset = Task.objects.all()
+    FLAG_EXISTS = 0
+    FLAG_DELETED = 9
+
+    queryset = Task.objects.filter(delete_flag=FLAG_EXISTS)
     serializer_class = TaskSerializer
     filter_fields = ('lane_id',)
+
+    def destroy(self, request, *args, **kwargs):
+        task = self.get_object()
+        task.delete_flag = self.FLAG_DELETED
+        task.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(methods=['post'], detail=False)
     def bulk_delete(self, request):
         lane_id = request.data['lane_id']
-        Task.objects.filter(lane_id=lane_id).update(delete_flag=9)
+        Task.objects.filter(lane_id=lane_id).update(delete_flag=self.FLAG_DELETED)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 

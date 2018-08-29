@@ -21,6 +21,7 @@
         <span>ラベル</span>
         <SelectLabel :selected="task.label_id"></SelectLabel>
         <el-checkbox v-model="status" @change="changeStatus">完了</el-checkbox>
+        <DeleteTaskButton :task="task" style="float: right;"></DeleteTaskButton>
       </div>
      </el-card>
   </div>
@@ -30,6 +31,7 @@
 import axios from 'axios'
 import SelectLabel from './SelectLabel'
 import SelectUser from './SelectUser'
+import DeleteTaskButton from './DeleteTaskButton'
 
 const TASK_URL = process.env.API_BASE_URL + '/api/tasks/'
 const LABEL_URL = process.env.API_BASE_URL + '/api/labels/'
@@ -38,7 +40,8 @@ export default {
   name: 'Task',
   components: {
     SelectLabel,
-    SelectUser
+    SelectUser,
+    DeleteTaskButton
   },
   props: ['projectid', 'task'],
   data () {
