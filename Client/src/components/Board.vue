@@ -12,15 +12,18 @@
       <div>
         <AddLaneForm :projectid="board.id"></AddLaneForm>
       </div>
-      <p v-for="lane in lanes" :key="lane.id" style="margin-top: 0px;">
-        <Lane :projectid="board.id" :lane="lane" v-on:calctotal="calc" />
-      </p>
+      <draggable v-model="lanes" @change="onChange" :options="dragoptions" style="display: flex;">
+        <p v-for="lane in lanes" :key="lane.id" style="margin-top: 0px;">
+          <Lane :projectid="board.id" :lane="lane" v-on:calctotal="calc" />
+        </p>
+      </draggable>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import draggable from 'vuedraggable'
 import Lane from './Lane'
 import AddLaneForm from './AddLaneForm'
 import { EV_LANE } from '../plugins/WebSocket'
@@ -31,6 +34,7 @@ const BOARD_URL = process.env.API_BASE_URL + '/api/projects/'
 export default {
   name: 'Board',
   components: {
+    draggable,
     Lane,
     AddLaneForm
   },
@@ -39,7 +43,11 @@ export default {
     return {
       board: null,
       lanes: null,
-      lanetotal: {}
+      lanetotal: {},
+      dragoptions: {
+        animation: 200,
+        group: 'lanegroup'
+      }
     }
   },
   mounted () {
@@ -79,6 +87,27 @@ export default {
       axios
         .get(BOARD_URL + id + '/')
         .then(response => (this.board = response.data))
+    },
+    onChange: function (event) {
+      if (event.moved) {
+        console.log(event.moved.element)
+        // 並び順を更新する
+        this.laneReOrder()
+      }
+    },
+    laneReOrder: function () {
+      var index = 0
+      this.lanes.forEach(lane => {
+        this.updateOrder(lane, index++)
+      })
+    },
+    updateOrder: function (lane, index) {
+      lane.order = index
+      axios
+        .put(LANE_URL + lane.id + '/', lane)
+        .then(response => {
+          console.log(response.status)
+        })
     }
   }
 }
