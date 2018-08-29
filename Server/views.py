@@ -46,7 +46,7 @@ class TaskViewSet(viewsets.ModelViewSet):
     FLAG_EXISTS = 0
     FLAG_DELETED = 9
 
-    queryset = Task.objects.filter(delete_flag=FLAG_EXISTS)
+    queryset = Task.objects.filter(delete_flag=FLAG_EXISTS).order_by('order')
     serializer_class = TaskSerializer
     filter_fields = ('lane_id',)
 
