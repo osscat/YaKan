@@ -84,6 +84,11 @@ python manage.py migrate
 npm install -g vue-cli
 ```
 
+# vuedraggable のインストール
+```
+npm install vuedraggable
+```
+
 # 開発環境
 
 # その他
