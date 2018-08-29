@@ -8,15 +8,18 @@
       <DeleteLaneButton :lane="lane" style="float: right;"></DeleteLaneButton>
       <span class="lane-total">{{laneTotal}} (md)</span>
     </div>
-    <p v-for="task in tasks" :key="task.id">
-      <Task :projectid="projectid" :task="task" />
-    </p>
+    <draggable v-model="tasks" @change="onChange" :options="dragoptions">
+      <p v-for="task in tasks" :key="task.id">
+        <Task :projectid="projectid" :task="task" />
+      </p>
+    </draggable>
     <AddTaskButton :laneid="lane.id" style="float: left" ></AddTaskButton>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import draggable from 'vuedraggable'
 import Task from './Task'
 import DeleteLaneButton from './DeleteLaneButton'
 import AddTaskButton from './AddTaskButton'
@@ -27,6 +30,7 @@ const TASK_URL = process.env.API_BASE_URL + '/api/tasks/'
 export default {
   name: 'Lane',
   components: {
+    draggable,
     Task,
     DeleteLaneButton,
     AddTaskButton
@@ -34,7 +38,11 @@ export default {
   props: ['projectid', 'lane'],
   data () {
     return {
-      tasks: null
+      tasks: null,
+      dragoptions: {
+        animation: 200,
+        group: 'tasks'
+      }
     }
   },
   mounted () {
@@ -63,6 +71,37 @@ export default {
       if (id === this.lane.id) {
         this.loadTask()
       }
+    },
+    onChange: function (event) {
+      if (event.added) {
+        // レーンIDを更新する
+        let t = event.added.element
+        t.lane_id = this.lane.id
+        axios
+          .put(TASK_URL + t.id + '/', t)
+          .then(response => {
+          })
+        // 並び順を更新する
+        this.reOrder()
+      }
+      if (event.moved) {
+        // 並び順を更新する
+        this.reOrder()
+      }
+    },
+    reOrder: function () {
+      var index = 0
+      this.tasks.forEach(task => {
+        this.updateOrder(task, index++)
+      })
+    },
+    updateOrder: function (task, index) {
+      task.order = index
+      axios
+        .put(TASK_URL + task.id + '/', task)
+        .then(response => {
+          console.log(response.status)
+        })
     }
   }
 }
