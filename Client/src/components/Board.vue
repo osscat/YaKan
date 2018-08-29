@@ -7,6 +7,7 @@
       <el-breadcrumb-item :to="{ name: 'Project' }">プロジェクト一覧</el-breadcrumb-item>
       <el-breadcrumb-item>{{board ? board.title : ''}}</el-breadcrumb-item>
     </el-breadcrumb>
+    <ProjectMember :projectid="board.id"></ProjectMember>
     <p>総工数 {{ allMd }} (md)</p>
     <div v-if="board" class="board">
       <div>
@@ -26,6 +27,7 @@ import axios from 'axios'
 import draggable from 'vuedraggable'
 import Lane from './Lane'
 import AddLaneForm from './AddLaneForm'
+import ProjectMember from './ProjectMember'
 import { EV_LANE } from '../plugins/WebSocket'
 
 const LANE_URL = process.env.API_BASE_URL + '/api/lanes/'
@@ -36,7 +38,8 @@ export default {
   components: {
     draggable,
     Lane,
-    AddLaneForm
+    AddLaneForm,
+    ProjectMember
   },
   props: ['boardid'],
   data () {
