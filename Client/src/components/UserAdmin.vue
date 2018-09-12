@@ -20,16 +20,16 @@
       <el-button @click="formVisible = true">ユーザーを追加</el-button>
     </div>
 
-    <el-dialog title="ユーザー追加" :visible.sync="formVisible">
-      <el-alert v-if="message" :title="message" type="error"></el-alert>
-      <el-form :model="form">
-        <el-form-item label="ユーザー名">
+    <el-dialog title="ユーザー追加" :visible.sync="formVisible" @closed="onClosed">
+      <el-alert v-for="(error, index) in errors" :key="index" :title="error" type="error"></el-alert>
+      <el-form :model="form" ref="form" :rules="rules">
+        <el-form-item label="ユーザー名" prop="username">
           <el-input v-model="form.username"></el-input>
         </el-form-item>
-        <el-form-item label="パスワード">
+        <el-form-item label="パスワード" prop="password1">
           <el-input type="password" v-model="form.password1"></el-input>
         </el-form-item>
-        <el-form-item label="パスワード（確認）">
+        <el-form-item label="パスワード（確認）" prop="password2">
           <el-input type="password" v-model="form.password2"></el-input>
         </el-form-item>
       </el-form>
@@ -52,12 +52,25 @@ export default {
   data () {
     return {
       users: null,
-      message: null,
+      errors: [],
       formVisible: false,
       form: {
         username: null,
         password1: null,
         password2: null
+      },
+      rules: {
+        username: [
+          { required: true, message: '入力してください', trigger: 'blur' }
+        ],
+        password1: [
+          { required: true, message: '入力してください', trigger: 'blur' },
+          { min: 8, message: '8文字以上にしてください', trigger: 'blur' }
+        ],
+        password2: [
+          { required: true, message: '入力してください', trigger: 'blur' },
+          { min: 8, message: '8文字以上にしてください', trigger: 'blur' }
+        ]
       }
     }
   },
@@ -91,8 +104,23 @@ export default {
           }
         )
     },
+    onClosed: function () {
+      this.load()
+      this.formVisible = false
+      this.$refs.form.resetFields()
+      this.errors = []
+    },
     save: function () {
-      this.message = null
+      this.$refs.form.validate(
+        valid => {
+          if (valid) {
+            this.doSave()
+          }
+        }
+      )
+    },
+    doSave: function () {
+      this.errors = []
       axios
         .post(URL_REGISTRATION, {
           username: this.form.username,
@@ -101,13 +129,17 @@ export default {
         })
         .then(
           response => {
-            this.load()
-            this.formVisible = false
+            this.onClosed()
           }
         )
         .catch(
           error => {
-            this.message = error.response.data
+            const response = error.response.data
+            for (const key in response) {
+              if (response.hasOwnProperty(key)) {
+                this.errors.push(...response[key])
+              }
+            }
           }
         )
     }

@@ -61,34 +61,35 @@ export default {
     save: function () {
       this.$refs.form.validate(
         valid => {
-          if (!valid) {
-            return false
+          if (valid) {
+            this.doSave()
           }
-
-          this.errors = []
-          axios
-            .patch(URL, {
-              first_name: this.form.first_name,
-              last_name: this.form.last_name
-            })
-            .then(
-              response => {
-                this.onClosed()
-                this.$emit('save')
-              }
-            )
-            .catch(
-              error => {
-                const response = error.response.data
-                for (const key in response) {
-                  if (response.hasOwnProperty(key)) {
-                    this.errors.push(...response[key])
-                  }
-                }
-              }
-            )
         }
       )
+    },
+    doSave: function () {
+      this.errors = []
+      axios
+        .patch(URL, {
+          first_name: this.form.first_name,
+          last_name: this.form.last_name
+        })
+        .then(
+          response => {
+            this.onClosed()
+            this.$emit('save')
+          }
+        )
+        .catch(
+          error => {
+            const response = error.response.data
+            for (const key in response) {
+              if (response.hasOwnProperty(key)) {
+                this.errors.push(...response[key])
+              }
+            }
+          }
+        )
     }
   }
 }

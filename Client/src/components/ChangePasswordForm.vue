@@ -64,33 +64,34 @@ export default {
     save: function () {
       this.$refs.form.validate(
         valid => {
-          if (!valid) {
-            return false
+          if (valid) {
+            this.doSave()
           }
-
-          this.errors = []
-          axios
-            .post(URL, {
-              new_password1: this.form.new_password1,
-              new_password2: this.form.new_password2
-            })
-            .then(
-              response => {
-                this.onClosed()
-              }
-            )
-            .catch(
-              error => {
-                const response = error.response.data
-                for (const key in response) {
-                  if (response.hasOwnProperty(key)) {
-                    this.errors.push(...response[key])
-                  }
-                }
-              }
-            )
         }
       )
+    },
+    doSave: function () {
+      this.errors = []
+      axios
+        .post(URL, {
+          new_password1: this.form.new_password1,
+          new_password2: this.form.new_password2
+        })
+        .then(
+          response => {
+            this.onClosed()
+          }
+        )
+        .catch(
+          error => {
+            const response = error.response.data
+            for (const key in response) {
+              if (response.hasOwnProperty(key)) {
+                this.errors.push(...response[key])
+              }
+            }
+          }
+        )
     }
   }
 }
