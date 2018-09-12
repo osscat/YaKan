@@ -10,10 +10,15 @@
     </div>
     <draggable v-model="tasks" @change="onChange" :options="dragoptions" style="min-height: 10px">
       <p v-for="task in tasks" :key="task.id">
-        <Task :projectid="projectid" :task="task" />
+        <transition name="fade">
+          <Task v-show="task.status === 0 || showFinished" :projectid="projectid" :task="task" />
+        </transition>
       </p>
     </draggable>
-    <AddTaskButton :laneid="lane.id" style="float: left" ></AddTaskButton>
+    <div>
+      <el-checkbox v-model="showFinished" style="float: right;">完了分を表示</el-checkbox>
+      <AddTaskButton :laneid="lane.id" style="float: left" ></AddTaskButton>
+    </div>
   </div>
 </template>
 
@@ -39,6 +44,7 @@ export default {
   data () {
     return {
       tasks: null,
+      showFinished: false,
       dragoptions: {
         animation: 200,
         group: 'taskgroup'
@@ -154,5 +160,11 @@ export default {
 }
 .lane-total {
   font-size: 1em;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>

@@ -3,7 +3,7 @@
  */
 <template>
   <div>
-    <el-card class="task" :body-style="bodyStyle">
+    <el-card class="task" :class="{ finished: task.status === 9 }" :body-style="bodyStyle">
       <div slot="header" class="task-header">
         <span class="task-title">{{task.title}}</span><br>
         <el-button class="togglebutton" type="text" @click="toggle">
@@ -134,5 +134,8 @@ export default {
 }
 .task-title {
   font-size: 1em;
+}
+.finished {
+  background-color: whitesmoke;
 }
 </style>
