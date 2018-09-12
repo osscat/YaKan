@@ -6,7 +6,9 @@
     <el-header class="header-sticky">
       <Header />
     </el-header>
-    <router-view/>
+    <div style="padding:20px;">
+      <router-view/>
+    </div>
   </el-container>
 </template>
 
