@@ -1,0 +1,42 @@
+version: '2'
+services:
+  postgres:
+    image: postgres:10.4
+    container_name: yakan-postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d/
+      - yakan-postgres-volume:/var/lib/postgresql/data
+    tty: true
+    stdin_open: true
+
+  redis:
+    image: redis
+    container_name: yakan-redis
+    restart: always
+    ports:
+      - 6379:6379
+    command:
+      redis-server -- appendonly yes
+
+  yakan:
+    build: .
+    image: yakan
+    container_name: yakan-main
+    ports:
+      - 10080:80
+    privileged: true
+    tty: true
+    stdin_open: true
+#    command: /bin/bash -c "sleep 5 && usr/sbin/httpd && cd /home/java/app/YaKan && uwsgi --ini uwsgi.ini && python3.6 manage.py makemigrations && python3.6 manage.py migrate && python3.6 manage.py runworker --settings YaKan.settings channels && daphne -b 0.0.0.0 -p 8001 YaKan.asgi:application"
+    command: /startup.sh
+
+volumes:
+  yakan-postgres-volume:
+    driver: local
+
