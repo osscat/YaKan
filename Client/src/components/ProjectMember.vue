@@ -53,12 +53,14 @@ export default {
       ]).then(responses => {
         const users = responses[0].data
         const members = responses[1].data
-        this.members = members.map(member => {
-          return {
-            id: member.id,
-            user: users.find(user => user.id === member.user_id)
-          }
-        })
+        this.members = members
+          .map(member => {
+            return {
+              id: member.id,
+              user: users.find(user => user.id === member.user_id)
+            }
+          })
+          .filter(member => member.user)
 
         const unselectableUsers = this.members.map(member => member.user)
         this.selectableUsers = users.filter(user => !unselectableUsers.includes(user))
