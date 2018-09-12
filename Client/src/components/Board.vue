@@ -2,7 +2,7 @@
  *  プロジェクトを表示するコンポーネント。
  */
 <template>
-  <div>
+  <div v-if="board">
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ name: 'Project' }">プロジェクト一覧</el-breadcrumb-item>
       <el-breadcrumb-item>{{board ? board.title : ''}}</el-breadcrumb-item>
