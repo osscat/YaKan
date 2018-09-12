@@ -3,14 +3,10 @@
  */
 <template>
   <el-container>
-    <el-header>
-      <Header/>
+    <el-header class="header-sticky">
+      <Header />
     </el-header>
-    <el-container>
-      <el-main>
-        <router-view/>
-      </el-main>
-    </el-container>
+    <router-view/>
   </el-container>
 </template>
 
@@ -27,4 +23,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.header-sticky {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
 </style>
