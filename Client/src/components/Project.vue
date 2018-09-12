@@ -6,6 +6,9 @@
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item>プロジェクト一覧</el-breadcrumb-item>
     </el-breadcrumb>
+    <div class="add-sticky">
+      <AddProjectForm />
+    </div>
     <form>
       <i class="el-icon-search"></i>
       <span>検索</span>
@@ -16,7 +19,6 @@
         <ProjectSub :project="project" />
       </div>
     </transition-group>
-    <AddProjectForm style="margin-top: 5px;"/>
   </div>
 </template>
 
@@ -63,6 +65,16 @@ export default {
 </script>
 
 <style scoped>
+.add-sticky {
+  width: 300px;
+  overflow: visible;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 60px;
+  background: rgba(0,0,0,0.2);
+  padding: 10px;
+  z-index: 1;
+}
 .el-breadcrumb {
   margin-bottom: 20px;
 }
