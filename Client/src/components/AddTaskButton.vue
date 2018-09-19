@@ -5,7 +5,7 @@
   <div style="float: right;">
     <el-button type="primary" icon="el-icon-plus" circle @click="dialogFormVisible = true"></el-button>
     <el-dialog title="タスク作成" :visible.sync="dialogFormVisible" :laneid="laneid">
-        <AddTaskForm :laneid="this.laneid"></AddTaskForm>
+      <AddTaskForm :laneid="laneid" @close="closeDialog"></AddTaskForm>
     </el-dialog>
   </div>
 </template>
@@ -23,6 +23,11 @@ export default {
     return {
       dialogFormVisible: false,
       formLabelWidth: '120px'
+    }
+  },
+  methods: {
+    closeDialog: function () {
+      this.dialogFormVisible = false
     }
   }
 }
