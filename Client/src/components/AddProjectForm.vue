@@ -31,9 +31,6 @@ export default {
           project_id: projectId,
           user_id: userId
         })
-        .then(response => {
-          console.log(response)
-        })
     },
     addProject: function () {
       axios
