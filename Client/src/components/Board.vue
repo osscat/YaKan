@@ -7,10 +7,8 @@
       <el-breadcrumb-item :to="{ name: 'Project' }">プロジェクト一覧</el-breadcrumb-item>
       <el-breadcrumb-item>{{board ? board.title : ''}}</el-breadcrumb-item>
     </el-breadcrumb>
-    <ProjectMember :projectid="board.id"></ProjectMember>
-    <p class="total">総工数 {{ allMd }} (md)</p>
     <ProjectMember :projectid="boardid"></ProjectMember>
-    <p>総工数 {{ allMd }} (md)</p>
+    <p class="total">総工数 {{ allMd }} (md)</p>
     <div v-if="board" class="board">
       <div>
         <AddLaneForm :projectid="boardid"></AddLaneForm>
