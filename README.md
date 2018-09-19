@@ -89,6 +89,11 @@ npm install -g vue-cli
 npm install vuedraggable
 ```
 
+# vuex のインストール
+```
+npm install vuex
+```
+
 # 開発環境
 
 # その他
