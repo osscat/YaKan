@@ -3,7 +3,9 @@
  */
 <template>
   <div>
-    <el-select v-model="value" clearable placeholder="Select Label" @change="updatelabel" v-on:change="$emit('onSelect', value)">
+    <el-select v-model="value" clearable placeholder="Select Label"
+      @change="updatelabel"
+      v-on:change="$emit('onSelect', value)">
       <el-option
         v-for="label in labels"
         v-bind:style="{'background-color': '#' + label.color}"
@@ -16,9 +18,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
-const LABEL_URL = process.env.API_BASE_URL + '/api/labels/'
 
 export default {
   name: 'SelectLabel',
@@ -30,23 +29,17 @@ export default {
     }
   },
   mounted () {
-    this.loadLabel() // TODO:1回だけでいい。
+    this.loadLabel()
   },
   methods: {
     loadLabel: function () {
-      axios
-        .get(LABEL_URL)
-        .then(
-          response => {
-            this.labels = response.data
-            if (this.selected) {
-              this.value = this.selected
-            }
-          }
-        )
+      this.labels = this.$store.getters.getLabels
+      if (this.selected) {
+        this.value = this.selected
+      }
     },
     updatelabel: function () {
-      var isFunc = typeof (this.$parent.$parent.changeLabel)
+      const isFunc = typeof (this.$parent.$parent.changeLabel)
       if (isFunc === 'function') {
         this.$parent.$parent.changeLabel(this.value)
       }
