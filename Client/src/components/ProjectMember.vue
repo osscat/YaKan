@@ -61,6 +61,7 @@ export default {
             }
           })
           .filter(member => member.user)
+        this.$store.commit('setMembers', this.members)
 
         const unselectableUsers = this.members.map(member => member.user)
         this.selectableUsers = users.filter(user => !unselectableUsers.includes(user))
