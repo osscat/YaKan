@@ -115,9 +115,6 @@ export default {
     updateTask: function () {
       axios
         .put(TASK_URL + this.task.id + '/', this.task)
-        .then(response => {
-          console.log(response.status)
-        })
     }
   }
 }
