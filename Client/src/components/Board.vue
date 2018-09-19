@@ -7,15 +7,15 @@
       <el-breadcrumb-item :to="{ name: 'Project' }">プロジェクト一覧</el-breadcrumb-item>
       <el-breadcrumb-item>{{board ? board.title : ''}}</el-breadcrumb-item>
     </el-breadcrumb>
-    <ProjectMember :projectid="board.id"></ProjectMember>
+    <ProjectMember :projectid="boardid"></ProjectMember>
     <p>総工数 {{ allMd }} (md)</p>
     <div v-if="board" class="board">
       <div>
-        <AddLaneForm :projectid="board.id"></AddLaneForm>
+        <AddLaneForm :projectid="boardid"></AddLaneForm>
       </div>
       <draggable v-model="lanes" @change="onChange" :options="dragoptions" style="display: flex;">
         <p v-for="lane in lanes" :key="lane.id" style="margin-top: 0px;">
-          <Lane :projectid="board.id" :lane="lane" v-on:calctotal="calc" />
+          <Lane :projectid="boardid" :lane="lane" v-on:calctotal="calc" />
         </p>
       </draggable>
     </div>
@@ -32,6 +32,7 @@ import { EV_LANE } from '../plugins/WebSocket'
 
 const LANE_URL = process.env.API_BASE_URL + '/api/lanes/'
 const BOARD_URL = process.env.API_BASE_URL + '/api/projects/'
+const LABEL_URL = process.env.API_BASE_URL + '/api/labels/'
 
 export default {
   name: 'Board',
@@ -54,8 +55,9 @@ export default {
     }
   },
   mounted () {
-    this.getBoard(this.boardid)
+    this.getBoard()
     this.loadLane()
+    this.loadLabels()
     this.$webSocket.$on(EV_LANE, this.reloadLane)
   },
   computed: {
@@ -86,14 +88,13 @@ export default {
         this.loadLane()
       }
     },
-    getBoard: function (id) {
+    getBoard: function () {
       axios
-        .get(BOARD_URL + id + '/')
+        .get(BOARD_URL + this.boardid + '/')
         .then(response => (this.board = response.data))
     },
     onChange: function (event) {
       if (event.moved) {
-        console.log(event.moved.element)
         // 並び順を更新する
         this.laneReOrder()
       }
@@ -108,9 +109,15 @@ export default {
       lane.order = index
       axios
         .put(LANE_URL + lane.id + '/', lane)
-        .then(response => {
-          console.log(response.status)
-        })
+    },
+    loadLabels: function () {
+      axios
+        .get(LABEL_URL)
+        .then(
+          response => {
+            this.$store.commit('setLabels', response.data)
+          }
+        )
     }
   }
 }
