@@ -2,79 +2,111 @@
  *  タスクを追加するダイアログフォームのコンポーネント。
  */
 <template>
-    <div>
-        <el-form>
-            <el-form-item label="タイトル" :label-width="formLabelWidth">
-                <el-input type="textarea" id="title" class="newtitle" :rows="1" v-model="newtitle"></el-input>
-            </el-form-item>
-            <el-form-item label="工数" :label-width="formLabelWidth">
-                <el-input-number style="width: 130px;" v-model="newmanday" :min="0" :max="99"></el-input-number>
-            </el-form-item>
-            <el-form-item label="並び順" :label-width="formLabelWidth">
-                <el-input-number style="width: 130px;" v-model="neworder"></el-input-number>
-            </el-form-item>
-            <el-form-item label="ラベル" :label-width="formLabelWidth">
-              <SelectLabel :selected="0" v-on:onSelect="labelselect"></SelectLabel>
-            </el-form-item>
-        </el-form>
-        <span slot="footer" class="dialog-footer">
-            <el-button @click="closeDialog()">キャンセル</el-button>
-            <el-button type="primary" @click="addTask()">作成</el-button>
-        </span>
-    </div>
+  <div>
+    <el-alert v-for="(error, index) in errors" :key="index" :title="error" type="error"></el-alert>
+    <el-form :model="form" ref="form" :label-width="formLabelWidth" :rules="rules">
+      <el-form-item label="タイトル" prop="title">
+        <el-input v-model="form.title" type="textarea" :rows="2"></el-input>
+      </el-form-item>
+      <el-form-item label="工数" prop="manday">
+        <el-input-number v-model="form.manday" :min="0" :max="99"></el-input-number>
+      </el-form-item>
+      <el-form-item label="並び順" prop="order">
+        <el-input-number v-model="form.order"></el-input-number>
+      </el-form-item>
+      <el-form-item label="担当者" prop="user">
+        <SelectUser :selected="0" v-on:onSelect="userselect"></SelectUser>
+      </el-form-item>
+      <el-form-item label="ラベル" prop="label">
+        <SelectLabel :selected="0" v-on:onSelect="labelselect"></SelectLabel>
+      </el-form-item>
+    </el-form>
+    <span slot="footer" class="dialog-footer">
+      <el-button @click="closeDialog">キャンセル</el-button>
+      <el-button type="primary" @click="addTask">作成</el-button>
+    </span>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
+import SelectUser from './SelectUser'
 import SelectLabel from './SelectLabel'
 import { EV_TASK } from '../plugins/WebSocket'
 
 const TASK_POST_URL = process.env.API_BASE_URL + '/api/tasks/'
 
 export default {
-  name: 'AddLaneForm',
+  name: 'AddTaskForm',
   components: {
+    SelectUser,
     SelectLabel
   },
   props: ['laneid', 'formLabelWidth'],
   data () {
     return {
-      newtitle: null,
-      newmanday: null,
-      neworder: 0,
-      newlabel: null
+      errors: [],
+      form: {
+        title: null,
+        manday: null,
+        order: 0,
+        user: null,
+        label: null
+      },
+      rules: {
+        title: [
+          { required: true, message: '入力してください', trigger: 'blur' }
+        ],
+        manday: [
+          { required: true, message: '入力してください', trigger: 'blur' }
+        ],
+        order: [
+          { required: true, message: '入力してください', trigger: 'blur' }
+        ]
+      }
     }
-  },
-  mounted () {
-    console.log('laneid2:' + this.laneid)
   },
   methods: {
     addTask: function () {
+      this.$refs.form.validate(
+        valid => {
+          if (valid) {
+            this.doSave()
+          }
+        }
+      )
+    },
+    doSave: function () {
       axios
         .post(TASK_POST_URL, {
-          title: this.newtitle,
-          order: this.neworder,
-          user_id: null,
-          man_day: this.newmanday,
+          title: this.form.title,
+          order: this.form.order,
+          man_day: this.form.manday,
           status: 0,
           lane_id: this.laneid,
-          label_id: this.newlabel
+          user_id: this.form.user,
+          label_id: this.form.label
         })
         .then(response => {
-          console.log(response.status)
-          this.newtitle = null
-          this.newmanday = null
-          this.neworder = 0
-          this.newlabel = null
+          this.form.title = null
+          this.form.manday = null
+          this.form.order = 0
+          this.form.user = null
+          this.form.label = null
           this.$webSocket.send(EV_TASK, this.laneid)
           this.closeDialog()
         })
     },
     closeDialog: function () {
-      this.$parent.$parent.dialogFormVisible = false
+      this.$emit('close')
+      this.$refs.form.resetFields()
+      this.errors = []
     },
     labelselect: function (select) {
-      this.newlabel = select
+      this.form.label = select
+    },
+    userselect: function (select) {
+      this.form.user = select
     }
   }
 }
@@ -82,7 +114,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.newtitle {
-  width: 300px;
+.el-table .el-button {
+  float: right;
 }
 </style>
