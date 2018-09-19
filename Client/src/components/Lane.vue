@@ -105,9 +105,6 @@ export default {
       task.order = index
       axios
         .put(TASK_URL + task.id + '/', task)
-        .then(response => {
-          console.log(response.status)
-        })
     }
   }
 }
