@@ -41,7 +41,6 @@ export default {
       axios
         .delete(url)
         .then(response => {
-          console.log(response)
           if (response.status === 204) {
             this.deletetasks()
             this.$webSocket.send(EV_LANE, this.lane.project_id)
@@ -52,9 +51,6 @@ export default {
       axios
         .post(TASK_DELETE_URL, {
           lane_id: this.lane.id
-        })
-        .then(response => {
-          console.log(response)
         })
     }
   }
