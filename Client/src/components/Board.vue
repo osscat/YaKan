@@ -8,7 +8,7 @@
       <el-breadcrumb-item>{{board ? board.title : ''}}</el-breadcrumb-item>
     </el-breadcrumb>
     <ProjectMember :projectid="board.id"></ProjectMember>
-    <p>総工数 {{ allMd }} (md)</p>
+    <p class="total">総工数 {{ allMd }} (md)</p>
     <div v-if="board" class="board">
       <div>
         <AddLaneForm :projectid="board.id"></AddLaneForm>
@@ -126,6 +126,9 @@ export default {
   width: 95%;
   margin: 5px;
   padding: 10px;
+}
+.total {
+  line-height: 40px;
 }
 .board {
   -webkit-box-align: start;
