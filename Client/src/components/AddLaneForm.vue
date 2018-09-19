@@ -22,9 +22,6 @@ export default {
       newtitle: null
     }
   },
-  mounted () {
-    console.log(this.projectid)
-  },
   methods: {
     addLane: function () {
       axios
