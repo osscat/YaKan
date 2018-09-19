@@ -2,7 +2,7 @@
  *  ユーザー情報変更画面コンポーネント。
  */
 <template>
-  <el-dialog title="ユーザー情報変更" width="400px" :visible.sync="dialogVisible" @open="onOpen" @closed="onClosed">
+  <el-dialog title="ユーザー情報変更" width="400px" :visible.sync="dialogVisible" @open="onOpen" @closed="onClosed" :append-to-body="true">
     <el-alert v-for="(error, index) in errors" :key="index" :title="error" type="error"></el-alert>
     <el-form :model="form" ref="form" label-width="100px">
       <el-form-item label="ユーザー名" prop="username">

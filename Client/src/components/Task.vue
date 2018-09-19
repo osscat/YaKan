@@ -133,6 +133,6 @@ export default {
   font-size: 1em;
 }
 .finished {
-  background-color: whitesmoke;
+  background-color: lightgray;
 }
 </style>
