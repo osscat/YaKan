@@ -2,7 +2,7 @@
  *  パスワード変更画面コンポーネント。
  */
 <template>
-  <el-dialog title="パスワード変更" width="500px" :visible.sync="dialogVisible" @closed="onClosed">
+  <el-dialog title="パスワード変更" width="500px" :visible.sync="dialogVisible" @closed="onClosed" :append-to-body="true">
     <el-alert v-for="(error, index) in errors" :key="index" :title="error" type="error"></el-alert>
     <el-form :model="form" ref="form" label-width="180px">
       <el-form-item label="新パスワード" :rules="rules" prop="new_password1">
