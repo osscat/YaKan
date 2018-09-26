@@ -101,13 +101,16 @@ export default {
     },
     laneReOrder: function () {
       var index = 0
+      var requests = []
       this.lanes.forEach(lane => {
-        this.updateOrder(lane, index++)
+        requests.push(this.updateOrder(lane, index++))
       })
+      Promise.all(requests)
+        .then(this.$webSocket.send(EV_LANE, this.boardid))
     },
     updateOrder: function (lane, index) {
       lane.order = index
-      axios
+      return axios
         .put(LANE_URL + lane.id + '/', lane)
     },
     loadLabels: function () {
