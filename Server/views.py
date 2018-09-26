@@ -37,11 +37,12 @@ class ProjectViewSet2(viewsets.ModelViewSet):
     @action(methods=['get'], detail=False)
     def filter(self, request):
         title = request.GET.get('title')
+        print(title)
         if title:
             ret = Project.objects.raw(
               'select * from public."Server_project"' +
               ' where id IN (select distinct project_id from public."Server_projectmember" where user_id = %s)' +
-              ' and title like %s'
+              ' and title ilike %s'
               , [request.GET.get('user_id'), '%' + title + '%']
             )
         else:
