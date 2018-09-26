@@ -2,7 +2,7 @@
  *  レーンを追加するフォームのコンポーネント。
  */
 <template>
-  <form>
+  <form @keyup.enter="addLane">
     <el-input id="title" class="newtitle" placeholder="Please input Lane-Title" v-model="newtitle"></el-input>
     <el-button type="primary" @click="addLane">作成</el-button>
   </form>
