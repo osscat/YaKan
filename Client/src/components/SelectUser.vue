@@ -9,7 +9,7 @@
       @change="updateuser"
       v-on:change="$emit('onSelect', id)">
       <el-option
-        v-for="member in this.$store.getters.getMembers"
+        v-for="member in members"
         :key="member.id"
         :label="member.user.username"
         :value="member.id">
@@ -25,7 +25,8 @@ export default {
   data () {
     return {
       id: null,
-      loading: false
+      loading: false,
+      members: null
     }
   },
   mounted () {
@@ -33,6 +34,7 @@ export default {
   },
   methods: {
     loadProjectMembers: function () {
+      this.members = this.$store.getters.getMembers
       if (this.selected) {
         this.id = this.selected
       }
@@ -48,10 +50,12 @@ export default {
         this.loading = true
         setTimeout(() => {
           this.loading = false
-          this.$store.getters.getMembers.filter(user => {
-            return user.label.toLowerCase().indexOf(query.toLowerCase()) > -1
+          this.members = this.$store.getters.getMembers.filter(user => {
+            return user.user.username.toLowerCase().indexOf(query.toLowerCase()) > -1
           })
         }, 200)
+      } else {
+        this.members = this.$store.getters.getMembers
       }
     }
   }
