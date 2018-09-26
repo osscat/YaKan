@@ -28,7 +28,7 @@ import AddProjectForm from './AddProjectForm'
 import { EV_PROJECT } from '../plugins/WebSocket'
 import axios from 'axios'
 
-const LIST_URL = process.env.API_BASE_URL + '/api/projects/'
+const LIST_URL = process.env.API_BASE_URL + '/api/projects2/test2'
 
 export default {
   name: 'Project',
@@ -48,15 +48,17 @@ export default {
   },
   methods: {
     loadList: function (word) {
-      var url = LIST_URL
+      console.log(this.$store.getters.getUser.pk)
+      console.log('bbb')
+      var url = LIST_URL + '?user_id=' + this.$store.getters.getUser.pk
       if (word) {
-        url += '?title=' + word
+        url += '&title=' + word
       }
       axios
         .get(url)
         .then(
           response => {
-            this.projects = response.data
+            this.projects = JSON.parse(response.data)
           }
         )
     }
