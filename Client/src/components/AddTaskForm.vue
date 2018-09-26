@@ -11,9 +11,6 @@
       <el-form-item label="工数" prop="manday">
         <el-input-number v-model="form.manday" :min="0" :max="99"></el-input-number>
       </el-form-item>
-      <el-form-item label="並び順" prop="order">
-        <el-input-number v-model="form.order"></el-input-number>
-      </el-form-item>
       <el-form-item label="担当者" prop="user">
         <SelectUser :selected="0" v-on:onSelect="userselect"></SelectUser>
       </el-form-item>
@@ -59,9 +56,6 @@ export default {
         ],
         manday: [
           { required: true, message: '入力してください', trigger: 'blur' }
-        ],
-        order: [
-          { required: true, message: '入力してください', trigger: 'blur' }
         ]
       }
     }
@@ -80,7 +74,7 @@ export default {
       axios
         .post(TASK_POST_URL, {
           title: this.form.title,
-          order: this.form.order,
+          order: 0,
           man_day: this.form.manday,
           status: 0,
           lane_id: this.laneid,
