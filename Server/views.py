@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from .models import Project, ProjectMember, Lane, Task, Label
 from .serializer import ProjectSerializer, ProjectMemberSerializer, UserSerializer, LaneSerializer, TaskSerializer, \
     LabelSerializer
+from django.http.response import JsonResponse
+from django.core import serializers
 
 
 class ProjectFilter(filters.FilterSet):
@@ -23,6 +25,47 @@ class ProjectViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectSerializer
     # フィルタセットの指定
     filter_class = ProjectFilter
+
+
+class ProjectViewSet2(viewsets.ModelViewSet):
+    queryset = Project.objects.raw(
+        'select * from public."Server_project" where id IN (select distinct project_id from public."Server_projectmember" where user_id = ''%s'')'
+        , ["3"]
+    )
+    serializer_class = ProjectSerializer
+
+    @action(methods=['get'], detail=False)
+    def filter(self, request):
+        title = request.GET.get('title')
+        print(title)
+        if title:
+            ret = Project.objects.raw(
+              'select * from public."Server_project"' +
+              ' where id IN (select distinct project_id from public."Server_projectmember" where user_id = %s)' +
+              ' and title ilike %s'
+              , [request.GET.get('user_id'), '%' + title + '%']
+            )
+        else:
+            ret = Project.objects.raw(
+                'select * from public."Server_project"' +
+                ' where id IN (select distinct project_id from public."Server_projectmember" where user_id = %s)'
+                , [request.GET.get('user_id')]
+            )
+        ret_json = '['
+        cnt = 0
+        for p in ret:
+            if cnt != 0:
+                ret_json += ','
+            cnt = cnt + 1
+            ret_json += '{' \
+                        '"id" : "' + str(p.pk) + '",' \
+                        '"title" : "' + p.title + '",' \
+                        '"description" : "' + p.description + '",' \
+                        '"owner_id" : "' + str(p.owner_id) + '",' \
+                        '"status" : "' + str(p.status) + '"' \
+                        '}'
+        ret_json += ']'
+        return Response(ret_json)
 
 
 class ProjectMemberViewSet(viewsets.ModelViewSet):

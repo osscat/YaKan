@@ -5,10 +5,14 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
+    user: null,
     labels: [],
     members: []
   },
   getters: {
+    getUser: state => {
+      return state.user
+    },
     getLabels: state => {
       return state.labels
     },
@@ -17,6 +21,9 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
+    setUser (state, user) {
+      state.user = user
+    },
     setLabels (state, value) {
       state.labels = value
     },

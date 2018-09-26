@@ -6,14 +6,15 @@
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item>プロジェクト一覧</el-breadcrumb-item>
     </el-breadcrumb>
-    <div class="add-sticky">
-      <AddProjectForm />
+    <div class="search-sticky">
+      <form>
+        <el-input size="medium" placeholder="Project Name" class="search" v-model="word" @keyup.native="loadList(word)"></el-input>
+        <el-button size="medium" type="info" icon="el-icon-search" @click="loadList(word)">検索</el-button>
+      </form>
     </div>
-    <form>
-      <i class="el-icon-search"></i>
-      <span>検索</span>
-      <el-input placeholder="Project Name" class="search" v-model="word" @keyup.native="loadList(word)"></el-input>
-    </form>
+    <br>
+    <AddProjectForm />
+    <br>
     <transition-group name="demo" tag="div" class="flex-project">
       <div v-for="project in projects" :key="project.id">
         <ProjectSub :project="project" />
@@ -28,7 +29,7 @@ import AddProjectForm from './AddProjectForm'
 import { EV_PROJECT } from '../plugins/WebSocket'
 import axios from 'axios'
 
-const LIST_URL = process.env.API_BASE_URL + '/api/projects/'
+const LIST_URL = process.env.API_BASE_URL + '/api/projects2/filter'
 
 export default {
   name: 'Project',
@@ -48,15 +49,15 @@ export default {
   },
   methods: {
     loadList: function (word) {
-      var url = LIST_URL
+      var url = LIST_URL + '?user_id=' + this.$store.getters.getUser.pk
       if (word) {
-        url += '?title=' + word
+        url += '&title=' + word
       }
       axios
         .get(url)
         .then(
           response => {
-            this.projects = response.data
+            this.projects = JSON.parse(response.data)
           }
         )
     }
@@ -65,14 +66,14 @@ export default {
 </script>
 
 <style scoped>
-.add-sticky {
-  width: 300px;
+.search-sticky {
+  width: 320px;
   overflow: visible;
   position: -webkit-sticky; /* Safari */
   position: sticky;
   top: 60px;
-  background: rgba(0,0,0,0.2);
-  padding: 10px;
+  background: rgba(100,100,0,0.2);
+  padding: 5px;
   z-index: 1;
 }
 .el-breadcrumb {

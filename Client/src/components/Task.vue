@@ -32,6 +32,7 @@ import axios from 'axios'
 import SelectLabel from './SelectLabel'
 import SelectUser from './SelectUser'
 import DeleteTaskButton from './DeleteTaskButton'
+import { EV_TASK } from '../plugins/WebSocket'
 
 const TASK_URL = process.env.API_BASE_URL + '/api/tasks/'
 const LABEL_URL = process.env.API_BASE_URL + '/api/labels/'
@@ -115,6 +116,9 @@ export default {
     updateTask: function () {
       axios
         .put(TASK_URL + this.task.id + '/', this.task)
+        .then(response => {
+          this.$webSocket.send(EV_TASK, this.task.lane_id)
+        })
     }
   }
 }

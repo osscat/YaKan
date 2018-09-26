@@ -3,8 +3,8 @@
  */
 <template>
   <form>
-    <el-input id="title" class="newtitle" placeholder="Please input Project-Title" v-model="newtitle"></el-input>
-    <el-button type="primary" @click="addProject">作成</el-button>
+    <el-input id="title" class="newtitle" size="small" placeholder="Please input Project-Title" v-model="newtitle"></el-input>
+    <el-button type="primary" size="small" icon="el-icon-plus" @click="addProject">作成</el-button>
   </form>
 </template>
 
