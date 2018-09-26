@@ -4,7 +4,8 @@
 <template>
   <div class="lane">
     <div>
-      <span class="lane-title">{{lane.title}}</span><br>
+      <input v-if="edit" class="lane-title-edit" v-model="lane.title" @keyup.enter="updateLaneTitle" @blur="updateLaneTitle" ref="r1" />
+      <span v-if="!edit" class="lane-title" @click="toEdit">{{lane.title}}</span><br>
       <DeleteLaneButton :lane="lane" style="float: right;"></DeleteLaneButton>
       <span class="lane-total">{{laneTotal}} (md)</span>
     </div>
@@ -30,6 +31,7 @@ import DeleteLaneButton from './DeleteLaneButton'
 import AddTaskButton from './AddTaskButton'
 import { EV_TASK } from '../plugins/WebSocket'
 
+const LANE_URL = process.env.API_BASE_URL + '/api/lanes/'
 const TASK_URL = process.env.API_BASE_URL + '/api/tasks/'
 
 export default {
@@ -48,7 +50,8 @@ export default {
       dragoptions: {
         animation: 200,
         group: 'taskgroup'
-      }
+      },
+      edit: false
     }
   },
   mounted () {
@@ -112,6 +115,15 @@ export default {
       task.order = index
       return axios
         .put(TASK_URL + task.id + '/', task)
+    },
+    toEdit: function () {
+      this.edit = true
+      this.$nextTick(function () { this.$refs.r1.focus() })
+    },
+    updateLaneTitle: function () {
+      this.edit = false
+      return axios
+        .put(LANE_URL + this.lane.id + '/', this.lane)
     }
   }
 }
@@ -161,6 +173,9 @@ export default {
 }
 .lane-title {
   font-size: 1.2em;
+}
+.lane-title-edit {
+  font-size: 1em;
 }
 .lane-total {
   font-size: 1em;
