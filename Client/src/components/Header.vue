@@ -56,6 +56,7 @@ export default {
     logout () {
       axios.post(URL_LOGOUT)
       this.$router.push({name: 'Login'})
+      this.$store.commit('setUser', null)
     }
   }
 }
