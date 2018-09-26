@@ -94,16 +94,23 @@ export default {
         // 並び順を更新する
         this.taskReOrder()
       }
+      if (event.removed) {
+        // 再読み込みの指示のみ（並び順を更新してもよいが必須ではないため）
+        this.$webSocket.send(EV_TASK, this.lane.id)
+      }
     },
     taskReOrder: function () {
       var index = 0
+      var requests = []
       this.tasks.forEach(task => {
-        this.updateOrder(task, index++)
+        requests.push(this.updateOrder(task, index++))
       })
+      Promise.all(requests)
+        .then(this.$webSocket.send(EV_TASK, this.lane.id))
     },
     updateOrder: function (task, index) {
       task.order = index
-      axios
+      return axios
         .put(TASK_URL + task.id + '/', task)
     }
   }
