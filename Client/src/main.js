@@ -14,6 +14,16 @@ Vue.use(WebSocket)
 
 Vue.config.productionTip = false
 
+router.beforeEach((to, from, next) => {
+  if (to.name === 'Login') {
+    next()
+  } else if (store.getters.getUser) {
+    next()
+  } else {
+    next({name: 'Login'})
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
