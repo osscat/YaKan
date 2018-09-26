@@ -29,7 +29,7 @@ const URL = process.env.API_BASE_URL + '/rest-auth/user/'
 
 export default {
   name: 'EditAccountForm',
-  props: ['visible', 'user'],
+  props: ['visible'],
   data () {
     return {
       errors: [],
@@ -48,9 +48,10 @@ export default {
   },
   methods: {
     onOpen: function () {
-      this.form.username = this.user.username
-      this.form.first_name = this.user.first_name
-      this.form.last_name = this.user.last_name
+      let user = this.$store.getters.getUser
+      this.form.username = user.username
+      this.form.first_name = user.first_name
+      this.form.last_name = user.last_name
     },
     onClosed: function () {
       this.dialogVisible = false
@@ -77,7 +78,7 @@ export default {
         .then(
           response => {
             this.onClosed()
-            this.$emit('save')
+            this.$store.commit('setUser', response.data)
           }
         )
         .catch(

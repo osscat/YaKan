@@ -13,6 +13,16 @@ const store = new Vuex.Store({
     getUser: state => {
       return state.user
     },
+    getUserDisplayName: state => {
+      if (!state.user) {
+        return ''
+      }
+      if (state.user.last_name) {
+        return state.user.last_name + ' ' + state.user.first_name
+      } else {
+        return state.user.username
+      }
+    },
     getLabels: state => {
       return state.labels
     },
