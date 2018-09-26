@@ -51,6 +51,7 @@ export default {
           response => {
             axios.defaults.headers.common['Authorization'] = 'JWT ' + response.data.token
             this.$router.push({name: 'Project'})
+            this.$store.commit('setUser', response.data.user)
           }
         )
         .catch(
