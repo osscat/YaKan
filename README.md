@@ -34,5 +34,6 @@ After execution, create a Django administrator user in the container.
 After completing the above work, you access "http://xxx.xxx.xxx.xxx:10080/#/login".
 
 ## Licence
+MIT
 
 ## Author
