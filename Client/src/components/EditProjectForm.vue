@@ -12,15 +12,13 @@
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button>キャンセル</el-button>
+      <el-button @click="onClosed">キャンセル</el-button>
       <el-button type="primary">作成</el-button>
     </span>
   </div>
 </template>
 
 <script>
-const TASK_POST_URL = process.env.API_BASE_URL + '/api/tasks/'
-
 export default {
   name: 'AddTaskForm',
   props: ['project'],
@@ -45,6 +43,11 @@ export default {
           { required: true, message: '入力してください', trigger: 'blur' }
         ]
       }
+    }
+  },
+  methods: {
+    onClosed: function () {
+      this.$emit('close')
     }
   }
 }

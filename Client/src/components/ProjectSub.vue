@@ -10,7 +10,7 @@
       <div style="float:right">
         <el-button type="warning" icon="el-icon-edit" circle @click="dialogFormVisible = true" />
         <el-dialog title="プロジェクト編集" :visible.sync="dialogFormVisible">
-          <EditProjectForm :project="project" />
+          <EditProjectForm :project="project" @close="closeDialog" />
         </el-dialog>
         <DeleteProjectButton :project="project" />
       </div>
@@ -39,6 +39,9 @@ export default {
   methods: {
     moveToBoard: function () {
       this.$router.push({name: 'Board', params: { boardid: this.project.id }})
+    },
+    closeDialog: function () {
+      this.dialogFormVisible = false
     }
   }
 }
