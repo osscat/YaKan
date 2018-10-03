@@ -29,7 +29,7 @@ import AddProjectForm from './AddProjectForm'
 import { EV_PROJECT } from '../plugins/WebSocket'
 import axios from 'axios'
 
-const LIST_URL = process.env.API_BASE_URL + '/api/projects2/filter'
+const LIST_URL = process.env.API_BASE_URL + '/api/projects2/filter/'
 
 export default {
   name: 'Project',
