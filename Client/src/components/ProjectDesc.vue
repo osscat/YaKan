@@ -17,7 +17,7 @@
 <script>
 export default {
   name: 'ProjectDesc',
-  props: ['project'],
+  props: ['project']
 }
 </script>
 
