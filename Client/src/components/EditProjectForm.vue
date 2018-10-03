@@ -3,17 +3,18 @@
  */
 <template>
   <div>
-    <el-form :model="form">
-      <el-form-item label="プロジェクトタイトル">
-        <el-input :value="project.title"></el-input>
+    <el-alert v-for="(error, index) in errors" :key="index" :title="error" type="error"></el-alert>
+    <el-form :model="form" ref="form" :rules="rules">
+      <el-form-item label="プロジェクトタイトル" prop="title">
+        <el-input :value="project.title" v-model="form.title"></el-input>
       </el-form-item>
-      <el-form-item label="プロジェクト説明">
-        <el-input type="textarea" rows="4" :value="project.description"></el-input>
+      <el-form-item label="プロジェクト説明" prop="description">
+        <el-input type="textarea" rows="4" :value="project.description" v-model="form.description"></el-input>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="onClosed">キャンセル</el-button>
-      <el-button type="primary">作成</el-button>
+      <el-button type="primary">更新</el-button>
     </span>
   </div>
 </template>
@@ -26,20 +27,11 @@ export default {
     return {
       errors: [],
       form: {
-        title: null,
-        manday: null,
-        order: 0,
-        user: null,
-        label: null
+        title: this.project.title,
+        description: this.project.description
       },
       rules: {
         title: [
-          { required: true, message: '入力してください', trigger: 'blur' }
-        ],
-        manday: [
-          { required: true, message: '入力してください', trigger: 'blur' }
-        ],
-        order: [
           { required: true, message: '入力してください', trigger: 'blur' }
         ]
       }
