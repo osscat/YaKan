@@ -1,6 +1,8 @@
 YaKan
 ===============
 
+この readme は YaKan を開発する人向けの内容です。
+
 # バックエンド
 
 # Python のインストール
@@ -158,7 +160,7 @@ npm run dev
 　　インメモリーデータベースを使います。
 
 　　本体（更新とまってますが仕方ない）
-　　https://github.com/MicrosoftArchive/redis/releases
+　　https://github.com/ftArchive/redis/releases
 
 　　連携用のモジュール
 　　pip install channels_redis
