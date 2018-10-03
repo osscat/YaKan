@@ -14,12 +14,16 @@
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="onClosed">キャンセル</el-button>
-      <el-button type="primary">更新</el-button>
+      <el-button type="primary" @click="updateProject">更新</el-button>
     </span>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
+const PROJECT_URL = process.env.API_BASE_URL + '/api/projects/'
+
 export default {
   name: 'AddTaskForm',
   props: ['project'],
@@ -40,6 +44,18 @@ export default {
   methods: {
     onClosed: function () {
       this.$emit('close')
+      this.form.title = this.project.title
+      this.form.description = this.project.description
+    },
+    updateProject: function () {
+      this.project.title = this.form.title
+      this.project.description = this.form.description
+      axios
+        .put(PROJECT_URL + this.project.id + '/', this.project)
+        .then(response => {
+          console.log(response)
+          this.onClosed()
+        })
     }
   }
 }
