@@ -5,7 +5,7 @@
   <div class="flex-container">
     <div class="flex-container2">
       <h2>Welcome to Yakan!</h2>
-      <img src="../assets/yakan.jpg" />
+      <img src="../assets/yakan.jpg" width="300px" height="200px" />
       <br>
       <el-alert v-if="message" :title="message" type="error"></el-alert>
       <el-form ref="form" :model="form" label-width="100px" @submit.native.prevent="login">
