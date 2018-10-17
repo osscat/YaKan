@@ -97,10 +97,16 @@ export default {
       this.errors = []
     },
     labelselect: function (select) {
-      this.form.label = select
+      if (select)
+        this.form.label = select
+      else
+        this.form.label = 0
     },
     userselect: function (select) {
-      this.form.user = select
+      if (select)
+        this.form.user = select
+      else
+        this.form.user = 0
     }
   }
 }
