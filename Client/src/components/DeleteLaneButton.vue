@@ -43,6 +43,7 @@ export default {
         .then(response => {
           if (response.status === 204) {
             this.deletetasks()
+            this.removeElement(this.lane.id)
             this.$webSocket.send(EV_LANE, this.lane.project_id)
           }
         })
@@ -52,6 +53,16 @@ export default {
         .post(TASK_DELETE_URL, {
           lane_id: this.lane.id
         })
+    },
+    removeElement: function (id) {
+      var data = this.$parent.$parent.$parent.lanes.filter(
+        function (item, index) {
+          if (item.id !== id) {
+            return true
+          }
+        }
+      )
+      this.$parent.$parent.$parent.lanes = data
     }
   }
 }
